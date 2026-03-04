@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bewerbungsformular der Wilhelm-Knapp-Schule Weilburg - Bewerben Sie sich jetzt für unsere Schulformen.">
+  <title>Bewerbung | Wilhelm-Knapp-Schule Weilburg</title>
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="../img/logo.svg" alt="Wilhelm-Knapp-Schule Weilburg Logo">
+      </a>
+      <button class="nav-toggle" aria-label="Navigation umschalten">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="../index.html#aktuelles">Aktuelles</a></li>
+          <li><a href="schulformen.html">Schulformen</a></li>
+          <li><a href="../index.html#ausbildungsberufe">Ausbildungsberufe</a></li>
+          <li><a href="bewerbung.html" class="active">Bewerbung</a></li>
+          <li><a href="../index.html#ueber-uns">Über uns</a></li>
+          <li><a href="../index.html#faq">FAQ</a></li>
+          <li><a href="../index.html#kontakt">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <h1>Bewerbungsformular</h1>
+      <p>Bewerben Sie sich jetzt für eine unserer Schulformen</p>
+      <div class="breadcrumb">
+        <a href="../index.html">Startseite</a>
+        <span>/</span>
+        <span>Bewerbung</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bewerbungsformular -->
+  <section class="section">
+    <div class="container">
+      <div class="alert alert-info" style="max-width:700px; margin: 0 auto 30px;">
+        <strong>Hinweis:</strong> Bitte füllen Sie alle mit <span class="required">*</span> gekennzeichneten Felder aus. Nach dem Absenden erhalten Sie eine Bestätigungs-E-Mail. Die Anmeldefrist für das kommende Schuljahr endet in der Regel am 30. April.
+      </div>
+
+      <div class="form-container">
+        <h3 style="margin-bottom:6px; font-size:1.3rem;">Bewerbung an der Wilhelm-Knapp-Schule</h3>
+        <p style="color: var(--wks-gray-600); margin-bottom:28px; font-size:0.95rem;">Schuljahr 2026/2027</p>
+
+        <form id="bewerbungForm">
+          <!-- Schulform -->
+          <fieldset style="border:none; margin-bottom:28px; padding:0;">
+            <legend style="font-size:1.1rem; font-weight:700; color:var(--wks-dark); margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--wks-gray-200); width:100%;">Gewünschte Schulform</legend>
+
+            <div class="form-group">
+              <label for="schulform">Schulform <span class="required">*</span></label>
+              <select id="schulform" class="form-control" required>
+                <option value="">Bitte wählen...</option>
+                <optgroup label="Berufliches Gymnasium">
+                  <option value="bg-technik">Berufliches Gymnasium - Technikwissenschaft/Mechatronik</option>
+                  <option value="bg-wirtschaft">Berufliches Gymnasium - Wirtschaft</option>
+                  <option value="bg-gesundheit">Berufliches Gymnasium - Gesundheit</option>
+                </optgroup>
+                <optgroup label="Fachoberschule">
+                  <option value="fos-a-technik">FOS Form A - Technik</option>
+                  <option value="fos-a-wirtschaft">FOS Form A - Wirtschaft und Verwaltung</option>
+                  <option value="fos-a-gesundheit">FOS Form A - Gesundheit</option>
+                  <option value="fos-b-technik">FOS Form B - Technik</option>
+                  <option value="fos-b-wirtschaft">FOS Form B - Wirtschaft und Verwaltung</option>
+                </optgroup>
+                <optgroup label="Berufsfachschule">
+                  <option value="bfs-metall">Berufsfachschule - Metalltechnik</option>
+                  <option value="bfs-elektro">Berufsfachschule - Elektrotechnik</option>
+                  <option value="bfs-holz">Berufsfachschule - Holztechnik</option>
+                  <option value="bfs-ernaehrung">Berufsfachschule - Ernährung und Hauswirtschaft</option>
+                  <option value="bfs-wirtschaft">Berufsfachschule - Wirtschaft und Verwaltung</option>
+                </optgroup>
+                <optgroup label="Fachschule für Technik">
+                  <option value="fs-maschinentechnik-vz">Fachschule Maschinentechnik (Vollzeit)</option>
+                  <option value="fs-maschinentechnik-tz">Fachschule Maschinentechnik (Teilzeit)</option>
+                  <option value="fs-elektrotechnik-vz">Fachschule Elektrotechnik (Vollzeit)</option>
+                  <option value="fs-elektrotechnik-tz">Fachschule Elektrotechnik (Teilzeit)</option>
+                </optgroup>
+                <optgroup label="Bildungsgänge zur Berufsvorbereitung">
+                  <option value="bzb">Bildungsgänge zur Berufsvorbereitung (BzB)</option>
+                </optgroup>
+              </select>
+            </div>
+          </fieldset>
+
+          <!-- Persönliche Daten -->
+          <fieldset style="border:none; margin-bottom:28px; padding:0;">
+            <legend style="font-size:1.1rem; font-weight:700; color:var(--wks-dark); margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--wks-gray-200); width:100%;">Persönliche Daten</legend>
+
+            <div class="form-group">
+              <label for="anrede">Anrede <span class="required">*</span></label>
+              <select id="anrede" class="form-control" required>
+                <option value="">Bitte wählen...</option>
+                <option value="herr">Herr</option>
+                <option value="frau">Frau</option>
+                <option value="divers">Divers</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="vorname">Vorname <span class="required">*</span></label>
+                <input type="text" id="vorname" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="nachname">Nachname <span class="required">*</span></label>
+                <input type="text" id="nachname" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="geburtsdatum">Geburtsdatum <span class="required">*</span></label>
+                <input type="date" id="geburtsdatum" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="geburtsort">Geburtsort <span class="required">*</span></label>
+                <input type="text" id="geburtsort" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="staatsangehoerigkeit">Staatsangehörigkeit <span class="required">*</span></label>
+              <input type="text" id="staatsangehoerigkeit" class="form-control" value="deutsch" required>
+            </div>
+          </fieldset>
+
+          <!-- Adresse -->
+          <fieldset style="border:none; margin-bottom:28px; padding:0;">
+            <legend style="font-size:1.1rem; font-weight:700; color:var(--wks-dark); margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--wks-gray-200); width:100%;">Adresse</legend>
+
+            <div class="form-group">
+              <label for="strasse">Straße und Hausnummer <span class="required">*</span></label>
+              <input type="text" id="strasse" class="form-control" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="plz">PLZ <span class="required">*</span></label>
+                <input type="text" id="plz" class="form-control" pattern="[0-9]{5}" maxlength="5" required>
+              </div>
+              <div class="form-group">
+                <label for="ort">Ort <span class="required">*</span></label>
+                <input type="text" id="ort" class="form-control" required>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Kontaktdaten -->
+          <fieldset style="border:none; margin-bottom:28px; padding:0;">
+            <legend style="font-size:1.1rem; font-weight:700; color:var(--wks-dark); margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--wks-gray-200); width:100%;">Kontaktdaten</legend>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="telefon">Telefon <span class="required">*</span></label>
+                <input type="tel" id="telefon" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="email">E-Mail <span class="required">*</span></label>
+                <input type="email" id="email" class="form-control" required>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Bisherige Schule -->
+          <fieldset style="border:none; margin-bottom:28px; padding:0;">
+            <legend style="font-size:1.1rem; font-weight:700; color:var(--wks-dark); margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--wks-gray-200); width:100%;">Bisherige Schule / Ausbildung</legend>
+
+            <div class="form-group">
+              <label for="bisherige-schule">Name der bisherigen Schule <span class="required">*</span></label>
+              <input type="text" id="bisherige-schule" class="form-control" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="abschluss">Höchster erreichter Abschluss <span class="required">*</span></label>
+                <select id="abschluss" class="form-control" required>
+                  <option value="">Bitte wählen...</option>
+                  <option value="hauptschule">Hauptschulabschluss</option>
+                  <option value="realschule">Mittlerer Abschluss (Realschulabschluss)</option>
+                  <option value="fachhochschulreife">Fachhochschulreife</option>
+                  <option value="abitur">Allgemeine Hochschulreife (Abitur)</option>
+                  <option value="berufsausbildung">Abgeschlossene Berufsausbildung</option>
+                  <option value="kein">Noch kein Abschluss</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="abschlussjahr">Abschlussjahr</label>
+                <input type="text" id="abschlussjahr" class="form-control" placeholder="z.B. 2026">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="notendurchschnitt">Notendurchschnitt (D, M, E)</label>
+              <input type="text" id="notendurchschnitt" class="form-control" placeholder="z.B. 2,5">
+            </div>
+          </fieldset>
+
+          <!-- Erziehungsberechtigte -->
+          <fieldset style="border:none; margin-bottom:28px; padding:0;">
+            <legend style="font-size:1.1rem; font-weight:700; color:var(--wks-dark); margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--wks-gray-200); width:100%;">Erziehungsberechtigte (bei Minderjährigen)</legend>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="eb-vorname">Vorname</label>
+                <input type="text" id="eb-vorname" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="eb-nachname">Nachname</label>
+                <input type="text" id="eb-nachname" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="eb-telefon">Telefon</label>
+                <input type="tel" id="eb-telefon" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="eb-email">E-Mail</label>
+                <input type="email" id="eb-email" class="form-control">
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Bemerkungen -->
+          <fieldset style="border:none; margin-bottom:28px; padding:0;">
+            <legend style="font-size:1.1rem; font-weight:700; color:var(--wks-dark); margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--wks-gray-200); width:100%;">Weitere Angaben</legend>
+
+            <div class="form-group">
+              <label for="bemerkungen">Bemerkungen / Besondere Umstände</label>
+              <textarea id="bemerkungen" class="form-control" rows="4" placeholder="z.B. besondere Förderbedarfe, Allergien, sonstige Hinweise..."></textarea>
+            </div>
+          </fieldset>
+
+          <!-- Datenschutz & Absenden -->
+          <div class="form-group">
+            <div class="checkbox-group">
+              <input type="checkbox" id="datenschutz" required>
+              <label for="datenschutz">Ich habe die <a href="datenschutz.html" target="_blank">Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner personenbezogenen Daten zum Zweck der Bewerbung einverstanden. <span class="required">*</span></label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="checkbox-group">
+              <input type="checkbox" id="richtigkeit" required>
+              <label for="richtigkeit">Ich bestätige, dass alle Angaben der Wahrheit entsprechen. <span class="required">*</span></label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; font-size:1.05rem; padding:14px;">Bewerbung absenden</button>
+        </form>
+      </div>
+
+      <!-- Zusätzliche Hinweise -->
+      <div style="max-width:700px; margin:30px auto 0; text-align:center;">
+        <p style="color:var(--wks-gray-600); font-size:0.9rem;">
+          <strong>Bitte beachten Sie:</strong> Nach dem Absenden des Formulars erhalten Sie eine Bestätigungs-E-Mail. Bitte reichen Sie zusätzlich die folgenden Unterlagen per Post oder persönlich im Sekretariat ein:
+        </p>
+        <ul style="text-align:left; max-width:500px; margin:16px auto 0; color:var(--wks-gray-600); font-size:0.9rem;">
+          <li>Beglaubigte Kopie des letzten Zeugnisses</li>
+          <li>Tabellarischer Lebenslauf mit Passbild</li>
+          <li>Ggf. Nachweis über Berufsausbildung</li>
+          <li>Ggf. Praktikumsvertrag (FOS Form A)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../img/logo.svg" alt="Wilhelm-Knapp-Schule" style="height:45px; filter:brightness(0) invert(1); opacity:0.9;">
+          <p>Selbstständige Berufliche Schule des Landkreises Limburg-Weilburg.</p>
+        </div>
+        <div>
+          <h4>Schulformen</h4>
+          <ul class="footer-links">
+            <li><a href="schulformen.html#berufliches-gymnasium">Berufliches Gymnasium</a></li>
+            <li><a href="schulformen.html#fachoberschule">Fachoberschule</a></li>
+            <li><a href="schulformen.html#berufsfachschule">Berufsfachschule</a></li>
+            <li><a href="schulformen.html#berufsschule">Berufsschule</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Schnellzugriff</h4>
+          <ul class="footer-links">
+            <li><a href="../index.html#aktuelles">Aktuelles</a></li>
+            <li><a href="../index.html#kontakt">Kontakt</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Kontakt</h4>
+          <ul class="footer-links">
+            <li>&#9742; 06471 / 489-0</li>
+            <li>&#9993; verwaltung@wks-weilburg.de</li>
+            <li>&#9719; Frankfurter Str. 40, 35781 Weilburg</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Wilhelm-Knapp-Schule Weilburg</span>
+        <div class="footer-legal">
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutzerklärung</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Nach oben">&#9650;</button>
+  <script src="../js/main.js"></script>
+</body>
+</html>
