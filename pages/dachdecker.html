@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ausbildung Dachdeckerin / Dachdecker an der Wilhelm-Knapp-Schule Weilburg - Berufsschule, Anmeldung, Dachdeckerzentrum Hessen und aktuelle Neuigkeiten.">
+  <meta name="keywords" content="Dachdecker, Dachdeckerin, Ausbildung, Wilhelm-Knapp-Schule, Weilburg, Dachdeckerzentrum, Hessen, Berufsschule">
+  <title>Dachdecker/in Ausbildung | Wilhelm-Knapp-Schule Weilburg</title>
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* Dachdecker-specific styles */
+    .dach-hero {
+      background: linear-gradient(135deg, #003366 0%, #005599 40%, #0077bb 70%, #c0392b 100%);
+      color: #fff;
+      padding: 80px 0 90px;
+      position: relative;
+      overflow: hidden;
+    }
+    .dach-hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -15%;
+      width: 500px;
+      height: 500px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+    .dach-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 350px;
+      height: 350px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 50%;
+    }
+    .dach-hero .container {
+      position: relative;
+      z-index: 1;
+    }
+    .dach-hero h1 {
+      font-size: 2.6rem;
+      color: #fff;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .dach-hero p {
+      font-size: 1.15rem;
+      opacity: 0.92;
+      max-width: 680px;
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+    .dach-hero .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .dach-hero .dach-badge {
+      display: inline-block;
+      background: rgba(212,160,23,0.9);
+      color: #fff;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    /* Highlight cards for key info */
+    .dach-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: -50px;
+      position: relative;
+      z-index: 2;
+    }
+    .dach-highlight-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px 24px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      border-top: 4px solid var(--wks-accent);
+    }
+    .dach-highlight-card:hover {
+      transform: translateY(-4px);
+    }
+    .dach-highlight-card .card-icon {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+    }
+    .dach-highlight-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+    .dach-highlight-card p {
+      color: var(--wks-gray-600);
+      font-size: 0.9rem;
+    }
+
+    /* Links section */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .link-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px;
+      border: 1px solid var(--wks-gray-200);
+      transition: all 0.3s ease;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .link-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-color: var(--wks-primary);
+    }
+    .link-card .link-icon {
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 8px;
+      background: var(--wks-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    .link-card h4 {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+    .link-card p {
+      color: var(--wks-gray-600);
+      font-size: 0.88rem;
+      margin-bottom: 10px;
+    }
+    .link-card a.card-link {
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* News section */
+    .news-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .news-item {
+      background: #fff;
+      border-radius: 8px;
+      padding: 24px;
+      border-left: 4px solid var(--wks-accent);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+    .news-item:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transform: translateX(4px);
+    }
+    .news-item .news-tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .tag-hessen { background: #e3f2fd; color: #1565c0; }
+    .tag-bund { background: #e8f5e9; color: #2e7d32; }
+    .tag-messe { background: #fff3e0; color: #e65100; }
+    .tag-tarif { background: #fce4ec; color: #c62828; }
+    .news-item h4 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+    .news-item p {
+      color: var(--wks-gray-600);
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+    }
+    .news-item a {
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    /* Registration form */
+    .anmeldung-section {
+      background: linear-gradient(135deg, var(--wks-dark), var(--wks-primary));
+      color: #fff;
+      padding: 70px 0;
+    }
+    .anmeldung-section .section-title h2 {
+      color: #fff;
+    }
+    .anmeldung-section .section-title p {
+      color: rgba(255,255,255,0.8);
+    }
+    .anmeldung-section .section-title h2::after {
+      background: var(--wks-accent);
+    }
+    .anmeldung-form-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      color: var(--wks-text);
+    }
+    .form-section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--wks-dark);
+      margin: 30px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--wks-accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .form-section-title:first-of-type {
+      margin-top: 0;
+    }
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* Responsive additions */
+    @media (max-width: 992px) {
+      .dach-highlights {
+        grid-template-columns: 1fr 1fr;
+      }
+      .links-grid {
+        grid-template-columns: 1fr;
+      }
+      .news-list {
+        grid-template-columns: 1fr;
+      }
+      .form-row-3 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 768px) {
+      .dach-hero h1 {
+        font-size: 1.8rem;
+      }
+      .dach-hero p {
+        font-size: 1rem;
+      }
+      .dach-highlights {
+        grid-template-columns: 1fr;
+        margin-top: -30px;
+      }
+      .form-row-3 {
+        grid-template-columns: 1fr;
+      }
+      .anmeldung-form-container {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-contact">
+        <span>&#9742; <a href="tel:+496471918800">06471 / 9188-0</a></span>
+        <span>&#9993; <a href="mailto:schulleitung@wks-weilburg.de">schulleitung@wks-weilburg.de</a></span>
+      </div>
+      <div>
+        <span>&#9719; Frankfurter Str. 39, 35781 Weilburg</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="../img/logo.svg" alt="Wilhelm-Knapp-Schule Weilburg Logo">
+      </a>
+
+      <button class="nav-toggle" aria-label="Navigation umschalten">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="main-nav">
+        <ul>
+          <li><a href="../index.html">Startseite</a></li>
+          <li><a href="../index.html#schulformen">Schulformen</a></li>
+          <li><a href="../index.html#ausbildungsberufe">Ausbildungsberufe</a></li>
+          <li><a href="dachdecker.html" class="active" style="background:var(--wks-light);color:var(--wks-primary);">Dachdecker/in</a></li>
+          <li><a href="bewerbung.html">Bewerbung</a></li>
+          <li><a href="../index.html#kontakt">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="dach-hero">
+    <div class="container">
+      <span class="dach-badge">Ausbildungsberuf mit Zukunft</span>
+      <h1>Dachdeckerin / Dachdecker<br>an der Wilhelm-Knapp-Schule</h1>
+      <p>Gestalte die Zukunft von oben! Die Wilhelm-Knapp-Schule Weilburg ist dein Lernort im dualen System der Dachdeckerausbildung &ndash; in direkter Kooperation mit dem Dachdecker-Zentrum Hessen.</p>
+      <div class="hero-buttons">
+        <a href="#anmeldung" class="btn btn-primary">Jetzt anmelden</a>
+        <a href="#links" class="btn btn-outline">Dachdeckerzentrum &amp; Links</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlight Cards -->
+  <div class="container">
+    <div class="dach-highlights">
+      <div class="dach-highlight-card">
+        <div class="card-icon">&#127969;</div>
+        <h3>3 Jahre Ausbildung</h3>
+        <p>Duale Ausbildung mit Berufsschule an der WKS und Praxis im Betrieb &ndash; Gesellenbrief als Dachdecker/in.</p>
+      </div>
+      <div class="dach-highlight-card">
+        <div class="card-icon">&#9881;</div>
+        <h3>Lernortkooperation</h3>
+        <p>Unterricht an der WKS und überbetriebliche Ausbildung im Dachdecker-Zentrum Hessen in Weilburg.</p>
+      </div>
+      <div class="dach-highlight-card">
+        <div class="card-icon">&#127793;</div>
+        <h3>Klimaberuf der Zukunft</h3>
+        <p>Dachdecker/innen leisten einen zentralen Beitrag zu Energiewende, Klimaanpassung und nachhaltigem Bauen.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Über die Ausbildung -->
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Die Dachdeckerausbildung</h2>
+        <p>Alles Wichtige zum Ausbildungsberuf Dachdeckerin / Dachdecker</p>
+      </div>
+
+      <div class="about-content">
+        <div class="about-text">
+          <h3>Dein Weg aufs Dach &ndash; und darüber hinaus</h3>
+          <p>Seit dem Schuljahr 2009/10 wird die Fachstufe der Dachdeckerausbildung an der Wilhelm-Knapp-Schule Weilburg unterrichtet &ndash; in Lernortkooperation mit dem Landesinnungsverband des Dachdeckerhandwerks Hessen und der Handwerkskammer Wiesbaden.</p>
+          <p>Der Berufsschulunterricht findet blockweise an der WKS statt, die überbetriebliche Lehrlingsunterweisung (ÜLU) erfolgt im Dachdecker-Zentrum Hessen, direkt hier in Weilburg am Waldhäuser Weg.</p>
+          <p>Neben der klassischen Dachdeckerausbildung bieten wir gemeinsam mit dem Landesinnungsverband auch die Aus- und Weiterbildung zur Fachkraft für Solartechnik (HWK) an.</p>
+          <a href="#anmeldung" class="btn btn-secondary" style="margin-top:10px;">Zur Anmeldung</a>
+        </div>
+        <div class="about-image" style="background: linear-gradient(135deg, #e8f0f8, #fef3d0);">&#127969;</div>
+      </div>
+
+      <div class="about-facts" style="margin-top:40px;">
+        <div class="fact-item">
+          <div class="fact-number">8.939</div>
+          <div class="fact-label">Dachdecker-Auszubildende in Deutschland</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-number">800+</div>
+          <div class="fact-label">Auszubildende in Hessen</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-number">6</div>
+          <div class="fact-label">Überbetriebliche Bildungszentren in Hessen</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Links & Partner -->
+  <section id="links" class="section section-alt">
+    <div class="container">
+      <div class="section-title">
+        <h2>Dachdeckerzentrum &amp; Partner</h2>
+        <p>Wichtige Links rund um die Dachdeckerausbildung in Weilburg, Hessen und Deutschland</p>
+      </div>
+
+      <div class="links-grid">
+        <div class="link-card">
+          <div class="link-icon">&#127960;</div>
+          <div>
+            <h4>Dachdecker-Zentrum Hessen</h4>
+            <p>Überbetriebliche Ausbildung, Fachlehrgänge und Weiterbildung des hessischen Dachdeckerhandwerks am Standort Weilburg.</p>
+            <a href="https://www.hessendach.de/" target="_blank" rel="noopener" class="card-link">www.hessendach.de &rarr;</a>
+          </div>
+        </div>
+
+        <div class="link-card">
+          <div class="link-icon">&#127891;</div>
+          <div>
+            <h4>Beruf mit besten Aussichten</h4>
+            <p>Die Ausbildungskampagne des Landesinnungsverbands Hessen &ndash; Informationen für Berufseinsteiger und Schulabgänger.</p>
+            <a href="https://www.berufmitbestenaussichten.de/" target="_blank" rel="noopener" class="card-link">www.berufmitbestenaussichten.de &rarr;</a>
+          </div>
+        </div>
+
+        <div class="link-card">
+          <div class="link-icon">&#127463;&#127465;</div>
+          <div>
+            <h4>Landesinnungsverband Hessen</h4>
+            <p>Der LIV vertritt die Interessen des hessischen Dachdeckerhandwerks mit 18 Innungen landesweit. Sitz in Weilburg.</p>
+            <a href="https://www.hessendach.de/das-sind-wir.html" target="_blank" rel="noopener" class="card-link">Mehr erfahren &rarr;</a>
+          </div>
+        </div>
+
+        <div class="link-card">
+          <div class="link-icon">&#127758;</div>
+          <div>
+            <h4>Zentralverband des Deutschen Dachdeckerhandwerks (ZVDH)</h4>
+            <p>Der Bundesverband des Dachdeckerhandwerks &ndash; Regelwerke, Branchennachrichten und politische Vertretung.</p>
+            <a href="https://dachdecker.org/" target="_blank" rel="noopener" class="card-link">www.dachdecker.org &rarr;</a>
+          </div>
+        </div>
+
+        <div class="link-card">
+          <div class="link-icon">&#128240;</div>
+          <div>
+            <h4>DDH &ndash; Das Dachdecker-Handwerk</h4>
+            <p>Das Fachmagazin des Dachdeckerhandwerks mit aktuellen News, Technik-Tipps und Praxisberichten.</p>
+            <a href="https://www.ddh.de" target="_blank" rel="noopener" class="card-link">www.ddh.de &rarr;</a>
+          </div>
+        </div>
+
+        <div class="link-card">
+          <div class="link-icon">&#128188;</div>
+          <div>
+            <h4>Handwerkskammer Wiesbaden</h4>
+            <p>Zuständige Handwerkskammer für die Dachdeckerausbildung im Kammerbezirk. Prüfungswesen und Beratung.</p>
+            <a href="https://www.hwk-wiesbaden.de/" target="_blank" rel="noopener" class="card-link">www.hwk-wiesbaden.de &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Neuigkeiten -->
+  <section id="neuigkeiten" class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Neuigkeiten zum Dachdeckerberuf</h2>
+        <p>Aktuelle Meldungen aus Hessen und Deutschland</p>
+      </div>
+
+      <div class="news-list">
+        <div class="news-item">
+          <span class="news-tag tag-messe">Messe</span>
+          <h4>DACH+HOLZ International 2026 &ndash; Rekorderfolg in Köln</h4>
+          <p>Mit 55.933 Fachbesuchern und 564 Ausstellern aus 28 Ländern war die DACH+HOLZ 2026 die erfolgreichste Ausgabe aller Zeiten.</p>
+          <a href="https://dachdecker.org/presse/presseservice/pressemitteilungen/dachdeckerhandwerk-auf-der-messe-dach-holz-2026-gut-vertreten-7654879/" target="_blank" rel="noopener">Weiterlesen &rarr;</a>
+        </div>
+
+        <div class="news-item">
+          <span class="news-tag tag-bund">Bundesweit</span>
+          <h4>Wachstum bei Azubi-Zahlen: 8.939 Auszubildende</h4>
+          <p>Das Dachdeckerhandwerk wächst &ndash; immer mehr junge Menschen entscheiden sich für diesen zukunftsorientierten Beruf. Das BIBB hebt ihn als Klimaberuf hervor.</p>
+          <a href="https://dachdecker.org/" target="_blank" rel="noopener">Weiterlesen &rarr;</a>
+        </div>
+
+        <div class="news-item">
+          <span class="news-tag tag-tarif">Tarifpolitik</span>
+          <h4>Neuer Branchenmindestlohn ab 2026</h4>
+          <p>Ab 1. Januar 2026 erhalten Dachdecker-Helfer mindestens 14,96 &euro;/Std. Der Tarifvertrag gilt bis Ende 2028.</p>
+          <a href="https://www.deutsche-handwerks-zeitung.de/dachdecker-branchenmindestlohn-2026-2027-2028-369473/" target="_blank" rel="noopener">Weiterlesen &rarr;</a>
+        </div>
+
+        <div class="news-item">
+          <span class="news-tag tag-bund">Regelwerk</span>
+          <h4>Neue Flachdachrichtlinie (Januar 2026)</h4>
+          <p>Komplett überarbeitet, mit verbindlichen Regelkonstruktionen für barrierefreie Übergänge. Seit Dezember 2025 digital verfügbar.</p>
+          <a href="https://dachdecker.org/die-neue-flachdachrichtlinie-ausgabe-januar-2026-9388606/" target="_blank" rel="noopener">Weiterlesen &rarr;</a>
+        </div>
+
+        <div class="news-item">
+          <span class="news-tag tag-hessen">Hessen</span>
+          <h4>Hessendach auf Kurs: Neue Mitglieder gewonnen</h4>
+          <p>Der Landesinnungsverband Hessen wächst und setzt Schwerpunkte bei Digitalisierung, KI und betriebswirtschaftlicher Stärkung.</p>
+          <a href="https://www.hessendach.de/" target="_blank" rel="noopener">Weiterlesen &rarr;</a>
+        </div>
+
+        <div class="news-item">
+          <span class="news-tag tag-bund">Verband</span>
+          <h4>ZVDH-Präsidium neu gewählt</h4>
+          <p>Dirk Bollwerk startet in seine vierte Amtszeit als Präsident. Schwerpunkte: politische Interessenvertretung, Digitalisierung und KI.</p>
+          <a href="https://dachdecker.org/" target="_blank" rel="noopener">Weiterlesen &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Anmeldeformular -->
+  <section id="anmeldung" class="anmeldung-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Anmeldung zur Berufsschule</h2>
+        <p>Anmeldeformular für Ausbildungsbetriebe und ihre Auszubildenden im Dachdeckerhandwerk</p>
+      </div>
+
+      <div class="anmeldung-form-container">
+        <form id="dachdeckerAnmeldungForm">
+
+          <!-- Angaben zum Auszubildenden -->
+          <h3 class="form-section-title">&#128100; Angaben zum/zur Auszubildenden</h3>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="azubi-vorname">Vorname <span class="required">*</span></label>
+              <input type="text" id="azubi-vorname" class="form-control" required placeholder="Vorname des/der Auszubildenden">
+            </div>
+            <div class="form-group">
+              <label for="azubi-nachname">Nachname <span class="required">*</span></label>
+              <input type="text" id="azubi-nachname" class="form-control" required placeholder="Nachname des/der Auszubildenden">
+            </div>
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-group">
+              <label for="azubi-geburtsdatum">Geburtsdatum <span class="required">*</span></label>
+              <input type="date" id="azubi-geburtsdatum" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="azubi-geburtsort">Geburtsort</label>
+              <input type="text" id="azubi-geburtsort" class="form-control" placeholder="Geburtsort">
+            </div>
+            <div class="form-group">
+              <label for="azubi-geschlecht">Geschlecht <span class="required">*</span></label>
+              <select id="azubi-geschlecht" class="form-control" required>
+                <option value="">Bitte wählen...</option>
+                <option value="maennlich">Männlich</option>
+                <option value="weiblich">Weiblich</option>
+                <option value="divers">Divers</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="azubi-strasse">Straße und Hausnummer <span class="required">*</span></label>
+            <input type="text" id="azubi-strasse" class="form-control" required placeholder="Straße und Hausnummer">
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-group">
+              <label for="azubi-plz">PLZ <span class="required">*</span></label>
+              <input type="text" id="azubi-plz" class="form-control" required placeholder="PLZ" pattern="[0-9]{5}" maxlength="5">
+            </div>
+            <div class="form-group">
+              <label for="azubi-ort">Ort <span class="required">*</span></label>
+              <input type="text" id="azubi-ort" class="form-control" required placeholder="Wohnort">
+            </div>
+            <div class="form-group">
+              <label for="azubi-staatsangehoerigkeit">Staatsangehörigkeit</label>
+              <input type="text" id="azubi-staatsangehoerigkeit" class="form-control" placeholder="z. B. deutsch">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="azubi-telefon">Telefon / Mobil <span class="required">*</span></label>
+              <input type="tel" id="azubi-telefon" class="form-control" required placeholder="Telefon- oder Mobilnummer">
+            </div>
+            <div class="form-group">
+              <label for="azubi-email">E-Mail <span class="required">*</span></label>
+              <input type="email" id="azubi-email" class="form-control" required placeholder="E-Mail-Adresse">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="azubi-schulabschluss">Höchster Schulabschluss <span class="required">*</span></label>
+              <select id="azubi-schulabschluss" class="form-control" required>
+                <option value="">Bitte wählen...</option>
+                <option value="hauptschule">Hauptschulabschluss</option>
+                <option value="realschule">Mittlerer Abschluss (Realschulabschluss)</option>
+                <option value="fachhochschulreife">Fachhochschulreife</option>
+                <option value="abitur">Allgemeine Hochschulreife (Abitur)</option>
+                <option value="ohne">Ohne Schulabschluss</option>
+                <option value="sonstiges">Sonstiger Abschluss</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="azubi-ausbildungsjahr">Ausbildungsjahr <span class="required">*</span></label>
+              <select id="azubi-ausbildungsjahr" class="form-control" required>
+                <option value="">Bitte wählen...</option>
+                <option value="1">1. Ausbildungsjahr</option>
+                <option value="2">2. Ausbildungsjahr</option>
+                <option value="3">3. Ausbildungsjahr</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="azubi-ausbildungsbeginn">Ausbildungsbeginn <span class="required">*</span></label>
+              <input type="date" id="azubi-ausbildungsbeginn" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="azubi-ausbildungsende">Voraussichtliches Ausbildungsende</label>
+              <input type="date" id="azubi-ausbildungsende" class="form-control">
+            </div>
+          </div>
+
+          <!-- Angaben zum Ausbildungsbetrieb -->
+          <h3 class="form-section-title">&#127970; Angaben zum Ausbildungsbetrieb</h3>
+
+          <div class="form-group">
+            <label for="betrieb-name">Name des Betriebs <span class="required">*</span></label>
+            <input type="text" id="betrieb-name" class="form-control" required placeholder="Firmenname des Ausbildungsbetriebs">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="betrieb-inhaber">Betriebsinhaber/in / Geschäftsführer/in <span class="required">*</span></label>
+              <input type="text" id="betrieb-inhaber" class="form-control" required placeholder="Name des Inhabers / der Inhaberin">
+            </div>
+            <div class="form-group">
+              <label for="betrieb-ausbilder">Ausbilder/in im Betrieb</label>
+              <input type="text" id="betrieb-ausbilder" class="form-control" placeholder="Name des Ausbilders / der Ausbilderin">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="betrieb-strasse">Straße und Hausnummer <span class="required">*</span></label>
+            <input type="text" id="betrieb-strasse" class="form-control" required placeholder="Betriebsadresse">
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-group">
+              <label for="betrieb-plz">PLZ <span class="required">*</span></label>
+              <input type="text" id="betrieb-plz" class="form-control" required placeholder="PLZ" pattern="[0-9]{5}" maxlength="5">
+            </div>
+            <div class="form-group">
+              <label for="betrieb-ort">Ort <span class="required">*</span></label>
+              <input type="text" id="betrieb-ort" class="form-control" required placeholder="Ort">
+            </div>
+            <div class="form-group">
+              <label for="betrieb-innung">Dachdecker-Innung</label>
+              <select id="betrieb-innung" class="form-control">
+                <option value="">Bitte wählen...</option>
+                <option value="biedenkopf">Innung Biedenkopf</option>
+                <option value="darmstadt">Innung Darmstadt</option>
+                <option value="dillenburg">Innung Dillenburg</option>
+                <option value="frankfurt">Innung Frankfurt</option>
+                <option value="fulda">Innung Fulda</option>
+                <option value="giessen">Innung Gießen</option>
+                <option value="bad-homburg">Innung Bad Homburg</option>
+                <option value="homberg-efze">Innung Homberg/Efze</option>
+                <option value="limburg">Innung Limburg</option>
+                <option value="hanau">Innung Hanau</option>
+                <option value="weilburg">Innung Weilburg</option>
+                <option value="andere">Andere / Nicht zugehörig</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="betrieb-telefon">Telefon Betrieb <span class="required">*</span></label>
+              <input type="tel" id="betrieb-telefon" class="form-control" required placeholder="Telefonnummer des Betriebs">
+            </div>
+            <div class="form-group">
+              <label for="betrieb-email">E-Mail Betrieb <span class="required">*</span></label>
+              <input type="email" id="betrieb-email" class="form-control" required placeholder="E-Mail-Adresse des Betriebs">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="betrieb-hwk">Handwerkskammer (HWK) <span class="required">*</span></label>
+            <select id="betrieb-hwk" class="form-control" required>
+              <option value="">Bitte wählen...</option>
+              <option value="wiesbaden">HWK Wiesbaden</option>
+              <option value="frankfurt-rhein-main">HWK Frankfurt-Rhein-Main</option>
+              <option value="kassel">HWK Kassel</option>
+              <option value="andere">Andere Handwerkskammer</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="betrieb-hwk-nummer">HWK-Betriebsnummer / Registriernummer</label>
+            <input type="text" id="betrieb-hwk-nummer" class="form-control" placeholder="Falls vorhanden">
+          </div>
+
+          <!-- Bemerkungen -->
+          <h3 class="form-section-title">&#128221; Bemerkungen</h3>
+
+          <div class="form-group">
+            <label for="bemerkungen">Sonstige Hinweise oder Bemerkungen</label>
+            <textarea id="bemerkungen" class="form-control" rows="4" placeholder="z. B. besondere Umstände, verkürzte Ausbildung, Wiederholer etc."></textarea>
+          </div>
+
+          <!-- Datenschutz -->
+          <div class="form-group">
+            <div class="checkbox-group">
+              <input type="checkbox" id="datenschutz-dach" required>
+              <label for="datenschutz-dach">Ich habe die <a href="datenschutz.html" target="_blank">Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung der angegebenen Daten zum Zweck der Berufsschulanmeldung einverstanden. <span class="required">*</span></label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="checkbox-group">
+              <input type="checkbox" id="richtigkeit-dach" required>
+              <label for="richtigkeit-dach">Ich bestätige die Richtigkeit der oben gemachten Angaben. <span class="required">*</span></label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-secondary" style="width:100%;justify-content:center;font-size:1.05rem;padding:14px 28px;">Anmeldung absenden</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kontakt-Kurzinfo -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-title">
+        <h2>Kontakt &amp; Ansprechpartner</h2>
+        <p>Bei Fragen zur Dachdeckerausbildung stehen wir Ihnen gerne zur Verfügung</p>
+      </div>
+
+      <div class="links-grid">
+        <div class="link-card">
+          <div class="link-icon" style="background:var(--wks-primary);color:#fff;">&#127979;</div>
+          <div>
+            <h4>Wilhelm-Knapp-Schule Weilburg</h4>
+            <p>Frankfurter Str. 39, 35781 Weilburg<br>
+            Tel.: <a href="tel:+496471918800">06471 / 9188-0</a><br>
+            E-Mail: <a href="mailto:schulleitung@wks-weilburg.de">schulleitung@wks-weilburg.de</a></p>
+            <a href="https://www.wilhelm-knapp-schule.de/" target="_blank" rel="noopener" class="card-link">www.wilhelm-knapp-schule.de &rarr;</a>
+          </div>
+        </div>
+
+        <div class="link-card">
+          <div class="link-icon" style="background:var(--wks-accent);color:#fff;">&#127960;</div>
+          <div>
+            <h4>Dachdecker-Zentrum Hessen</h4>
+            <p>Waldhäuser Weg 19, 35781 Weilburg<br>
+            Tel.: <a href="tel:+49647137936">06471 / 379 36-5</a><br>
+            E-Mail: <a href="mailto:info@hessendach.de">info@hessendach.de</a></p>
+            <a href="https://www.hessendach.de/" target="_blank" rel="noopener" class="card-link">www.hessendach.de &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../img/logo.svg" alt="Wilhelm-Knapp-Schule Weilburg" style="height:45px; filter: brightness(0) invert(1); opacity:0.9;">
+          <p>Selbstständige Berufliche Schule des Landkreises Limburg-Weilburg. Bildung mit Tradition und Zukunft seit 1905.</p>
+        </div>
+
+        <div>
+          <h4>Dachdecker-Links</h4>
+          <ul class="footer-links">
+            <li><a href="https://www.hessendach.de/" target="_blank" rel="noopener">Dachdeckerzentrum Hessen</a></li>
+            <li><a href="https://dachdecker.org/" target="_blank" rel="noopener">ZVDH</a></li>
+            <li><a href="https://www.ddh.de" target="_blank" rel="noopener">DDH Fachmagazin</a></li>
+            <li><a href="https://www.berufmitbestenaussichten.de/" target="_blank" rel="noopener">Beruf mit besten Aussichten</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Schnellzugriff</h4>
+          <ul class="footer-links">
+            <li><a href="../index.html">Startseite WKS</a></li>
+            <li><a href="#links">Partner &amp; Links</a></li>
+            <li><a href="#neuigkeiten">Neuigkeiten</a></li>
+            <li><a href="#anmeldung">Anmeldung</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Kontakt</h4>
+          <ul class="footer-links">
+            <li>&#9742; 06471 / 9188-0</li>
+            <li>&#9993; schulleitung@wks-weilburg.de</li>
+            <li>&#9719; Frankfurter Str. 39</li>
+            <li>35781 Weilburg</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Wilhelm-Knapp-Schule Weilburg. Alle Rechte vorbehalten.</span>
+        <div class="footer-legal">
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutzerklärung</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Nach oben scrollen">&#9650;</button>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Dachdecker Anmeldung Form Handling
+    document.addEventListener('DOMContentLoaded', function() {
+      var form = document.getElementById('dachdeckerAnmeldungForm');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          var requiredFields = form.querySelectorAll('[required]');
+          var valid = true;
+
+          requiredFields.forEach(function(field) {
+            if (field.type === 'checkbox') {
+              if (!field.checked) {
+                field.parentElement.style.color = '#dc3545';
+                valid = false;
+              } else {
+                field.parentElement.style.color = '';
+              }
+            } else if (!field.value.trim()) {
+              field.style.borderColor = '#dc3545';
+              valid = false;
+            } else {
+              field.style.borderColor = '';
+            }
+          });
+
+          if (!valid) {
+            var firstError = form.querySelector('[style*="border-color: rgb(220, 53, 69)"], [style*="color: rgb(220, 53, 69)"]');
+            if (firstError) {
+              firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            return;
+          }
+
+          // Collect form data for email
+          var azubiVorname = document.getElementById('azubi-vorname').value;
+          var azubiNachname = document.getElementById('azubi-nachname').value;
+          var azubiGeburtsdatum = document.getElementById('azubi-geburtsdatum').value;
+          var azubiGeburtsort = document.getElementById('azubi-geburtsort').value;
+          var azubiGeschlecht = document.getElementById('azubi-geschlecht').value;
+          var azubiStrasse = document.getElementById('azubi-strasse').value;
+          var azubiPlz = document.getElementById('azubi-plz').value;
+          var azubiOrt = document.getElementById('azubi-ort').value;
+          var azubiStaat = document.getElementById('azubi-staatsangehoerigkeit').value;
+          var azubiTelefon = document.getElementById('azubi-telefon').value;
+          var azubiEmail = document.getElementById('azubi-email').value;
+          var azubiAbschluss = document.getElementById('azubi-schulabschluss').options[document.getElementById('azubi-schulabschluss').selectedIndex].text;
+          var azubiAJahr = document.getElementById('azubi-ausbildungsjahr').options[document.getElementById('azubi-ausbildungsjahr').selectedIndex].text;
+          var azubiABeginn = document.getElementById('azubi-ausbildungsbeginn').value;
+          var azubiAEnde = document.getElementById('azubi-ausbildungsende').value;
+
+          var betriebName = document.getElementById('betrieb-name').value;
+          var betriebInhaber = document.getElementById('betrieb-inhaber').value;
+          var betriebAusbilder = document.getElementById('betrieb-ausbilder').value;
+          var betriebStrasse = document.getElementById('betrieb-strasse').value;
+          var betriebPlz = document.getElementById('betrieb-plz').value;
+          var betriebOrt = document.getElementById('betrieb-ort').value;
+          var betriebInnung = document.getElementById('betrieb-innung').options[document.getElementById('betrieb-innung').selectedIndex].text;
+          var betriebTelefon = document.getElementById('betrieb-telefon').value;
+          var betriebEmail = document.getElementById('betrieb-email').value;
+          var betriebHwk = document.getElementById('betrieb-hwk').options[document.getElementById('betrieb-hwk').selectedIndex].text;
+          var betriebHwkNr = document.getElementById('betrieb-hwk-nummer').value;
+          var bemerkungen = document.getElementById('bemerkungen').value;
+
+          // Build email body
+          var subject = 'Berufsschulanmeldung Dachdecker/in: ' + azubiVorname + ' ' + azubiNachname + ' (' + betriebName + ')';
+          var body = '=== ANMELDUNG ZUR BERUFSSCHULE - DACHDECKER/IN ===\n\n' +
+            '--- ANGABEN ZUM/ZUR AUSZUBILDENDEN ---\n' +
+            'Name: ' + azubiVorname + ' ' + azubiNachname + '\n' +
+            'Geburtsdatum: ' + azubiGeburtsdatum + '\n' +
+            'Geburtsort: ' + azubiGeburtsort + '\n' +
+            'Geschlecht: ' + azubiGeschlecht + '\n' +
+            'Adresse: ' + azubiStrasse + ', ' + azubiPlz + ' ' + azubiOrt + '\n' +
+            'Staatsangehoerigkeit: ' + azubiStaat + '\n' +
+            'Telefon: ' + azubiTelefon + '\n' +
+            'E-Mail: ' + azubiEmail + '\n' +
+            'Schulabschluss: ' + azubiAbschluss + '\n' +
+            'Ausbildungsjahr: ' + azubiAJahr + '\n' +
+            'Ausbildungsbeginn: ' + azubiABeginn + '\n' +
+            'Voraussichtliches Ende: ' + azubiAEnde + '\n\n' +
+            '--- ANGABEN ZUM AUSBILDUNGSBETRIEB ---\n' +
+            'Betrieb: ' + betriebName + '\n' +
+            'Inhaber/in: ' + betriebInhaber + '\n' +
+            'Ausbilder/in: ' + betriebAusbilder + '\n' +
+            'Adresse: ' + betriebStrasse + ', ' + betriebPlz + ' ' + betriebOrt + '\n' +
+            'Dachdecker-Innung: ' + betriebInnung + '\n' +
+            'Telefon: ' + betriebTelefon + '\n' +
+            'E-Mail: ' + betriebEmail + '\n' +
+            'Handwerkskammer: ' + betriebHwk + '\n' +
+            'HWK-Nummer: ' + betriebHwkNr + '\n\n' +
+            '--- BEMERKUNGEN ---\n' +
+            (bemerkungen || '(keine)') + '\n';
+
+          // Open mailto link to send to schulleitung@wks-weilburg.de
+          var mailtoLink = 'mailto:schulleitung@wks-weilburg.de' +
+            '?subject=' + encodeURIComponent(subject) +
+            '&body=' + encodeURIComponent(body);
+          window.location.href = mailtoLink;
+
+          // Show confirmation message
+          var alertEl = document.createElement('div');
+          alertEl.className = 'alert alert-success';
+          alertEl.innerHTML = '<strong>E-Mail wird vorbereitet!</strong><br>Ihr E-Mail-Programm öffnet sich mit der Anmeldung von <strong>' +
+            (azubiVorname + ' ' + azubiNachname).replace(/</g, '&lt;').replace(/>/g, '&gt;') +
+            '</strong> (Betrieb: <strong>' +
+            betriebName.replace(/</g, '&lt;').replace(/>/g, '&gt;') +
+            '</strong>). Bitte senden Sie die E-Mail an <strong>schulleitung@wks-weilburg.de</strong> ab.';
+          form.parentNode.insertBefore(alertEl, form);
+
+          alertEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+          setTimeout(function() {
+            alertEl.remove();
+          }, 12000);
+        });
+      }
+
+      // Reset field border on input
+      document.querySelectorAll('#dachdeckerAnmeldungForm .form-control').forEach(function(field) {
+        field.addEventListener('input', function() {
+          this.style.borderColor = '';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
