@@ -1,31 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 80" width="360" height="80">
   <defs>
     <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#003366;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#005599;stop-opacity:1" />
     </linearGradient>
   </defs>
-  <!-- Shield shape -->
-  <path d="M10 8 L50 8 L50 8 Q50 2, 56 2 L64 2 Q70 2, 70 8 L70 50 Q70 72, 40 78 Q10 72, 10 50 Z" fill="url(#grad1)" stroke="#002244" stroke-width="1.5"/>
-  <!-- Book icon -->
-  <path d="M25 20 L40 15 L55 20 L55 52 L40 47 L25 52 Z" fill="none" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
-  <line x1="40" y1="15" x2="40" y2="47" stroke="#ffffff" stroke-width="2"/>
-  <!-- Gear icon (representing vocational/technical) -->
-  <circle cx="40" cy="60" r="6" fill="none" stroke="#f0c040" stroke-width="1.5"/>
-  <circle cx="40" cy="60" r="2.5" fill="#f0c040"/>
-  <g stroke="#f0c040" stroke-width="1.5">
-    <line x1="40" y1="52" x2="40" y2="54"/>
-    <line x1="40" y1="66" x2="40" y2="68"/>
-    <line x1="32" y1="60" x2="34" y2="60"/>
-    <line x1="46" y1="60" x2="48" y2="60"/>
-    <line x1="34.3" y1="54.3" x2="35.7" y2="55.7"/>
-    <line x1="44.3" y1="64.3" x2="45.7" y2="65.7"/>
-    <line x1="34.3" y1="65.7" x2="35.7" y2="64.3"/>
-    <line x1="44.3" y1="55.7" x2="45.7" y2="54.3"/>
+  <!-- Rounded rectangle badge with WKS -->
+  <rect x="4" y="4" width="68" height="72" rx="10" ry="10" fill="url(#grad1)" stroke="#002244" stroke-width="1.5"/>
+  <!-- WKS letters -->
+  <text x="38" y="36" font-family="'Segoe UI', Arial, sans-serif" font-size="24" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="2">WKS</text>
+  <!-- Horizontal gold accent line -->
+  <line x1="16" y1="44" x2="60" y2="44" stroke="#d4a017" stroke-width="2" stroke-linecap="round"/>
+  <!-- Subtitle: Weilburg -->
+  <text x="38" y="58" font-family="'Segoe UI', Arial, sans-serif" font-size="9" font-weight="600" fill="#ffffff" text-anchor="middle" letter-spacing="1.5">WEILBURG</text>
+  <!-- Small gear + book icons below -->
+  <circle cx="28" cy="68" r="4" fill="none" stroke="#d4a017" stroke-width="1"/>
+  <circle cx="28" cy="68" r="1.5" fill="#d4a017"/>
+  <g stroke="#d4a017" stroke-width="0.8">
+    <line x1="28" y1="63" x2="28" y2="64"/>
+    <line x1="28" y1="72" x2="28" y2="73"/>
+    <line x1="23" y1="68" x2="24" y2="68"/>
+    <line x1="32" y1="68" x2="33" y2="68"/>
   </g>
-  <!-- School name -->
-  <text x="85" y="30" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="700" fill="#003366" letter-spacing="0.5">Wilhelm-Knapp-Schule</text>
-  <text x="85" y="50" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#005599">Weilburg</text>
-  <text x="85" y="68" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="400" fill="#666666">Selbstständige Berufliche Schule</text>
-  <text x="85" y="78" font-family="'Segoe UI', Arial, sans-serif" font-size="9" font-weight="400" fill="#888888">des Landkreises Limburg-Weilburg</text>
+  <!-- Small open book icon -->
+  <path d="M42 64 L48 62.5 L54 64 L54 72 L48 70.5 L42 72 Z" fill="none" stroke="#d4a017" stroke-width="1" stroke-linejoin="round"/>
+  <line x1="48" y1="62.5" x2="48" y2="70.5" stroke="#d4a017" stroke-width="1"/>
+  <!-- School name text -->
+  <text x="88" y="28" font-family="'Segoe UI', Arial, sans-serif" font-size="21" font-weight="700" fill="#003366" letter-spacing="0.3">Wilhelm-Knapp-Schule</text>
+  <text x="88" y="47" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="500" fill="#005599" letter-spacing="0.5">Weilburg / Lahn</text>
+  <line x1="88" y1="54" x2="180" y2="54" stroke="#d4a017" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="88" y="66" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" font-weight="400" fill="#555555" letter-spacing="0.3">Selbstständige Berufliche Schule</text>
+  <text x="88" y="77" font-family="'Segoe UI', Arial, sans-serif" font-size="9" font-weight="400" fill="#777777" letter-spacing="0.3">des Landkreises Limburg-Weilburg</text>
 </svg>

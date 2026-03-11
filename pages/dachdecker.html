@@ -281,11 +281,11 @@
   <div class="top-bar">
     <div class="container">
       <div class="top-bar-contact">
-        <span>&#9742; <a href="tel:+4964714890">06471 / 489-0</a></span>
-        <span>&#9993; <a href="mailto:verwaltung@wks-weilburg.de">verwaltung@wks-weilburg.de</a></span>
+        <span>&#9742; <a href="tel:+496471918800">06471 / 9188-0</a></span>
+        <span>&#9993; <a href="mailto:schulleitung@wks-weilburg.de">schulleitung@wks-weilburg.de</a></span>
       </div>
       <div>
-        <span>&#9719; Frankfurter Str. 40, 35781 Weilburg</span>
+        <span>&#9719; Frankfurter Str. 39, 35781 Weilburg</span>
       </div>
     </div>
   </div>
@@ -739,9 +739,9 @@
           <div class="link-icon" style="background:var(--wks-primary);color:#fff;">&#127979;</div>
           <div>
             <h4>Wilhelm-Knapp-Schule Weilburg</h4>
-            <p>Frankfurter Str. 40, 35781 Weilburg<br>
-            Tel.: <a href="tel:+4964714890">06471 / 489-0</a><br>
-            E-Mail: <a href="mailto:verwaltung@wks-weilburg.de">verwaltung@wks-weilburg.de</a></p>
+            <p>Frankfurter Str. 39, 35781 Weilburg<br>
+            Tel.: <a href="tel:+496471918800">06471 / 9188-0</a><br>
+            E-Mail: <a href="mailto:schulleitung@wks-weilburg.de">schulleitung@wks-weilburg.de</a></p>
             <a href="https://www.wilhelm-knapp-schule.de/" target="_blank" rel="noopener" class="card-link">www.wilhelm-knapp-schule.de &rarr;</a>
           </div>
         </div>
@@ -792,9 +792,9 @@
         <div>
           <h4>Kontakt</h4>
           <ul class="footer-links">
-            <li>&#9742; 06471 / 489-0</li>
-            <li>&#9993; verwaltung@wks-weilburg.de</li>
-            <li>&#9719; Frankfurter Str. 40</li>
+            <li>&#9742; 06471 / 9188-0</li>
+            <li>&#9993; schulleitung@wks-weilburg.de</li>
+            <li>&#9719; Frankfurter Str. 39</li>
             <li>35781 Weilburg</li>
           </ul>
         </div>
@@ -849,27 +849,86 @@
             return;
           }
 
-          // Collect form data
-          var azubiName = document.getElementById('azubi-vorname').value + ' ' + document.getElementById('azubi-nachname').value;
-          var betriebName = document.getElementById('betrieb-name').value;
+          // Collect form data for email
+          var azubiVorname = document.getElementById('azubi-vorname').value;
+          var azubiNachname = document.getElementById('azubi-nachname').value;
+          var azubiGeburtsdatum = document.getElementById('azubi-geburtsdatum').value;
+          var azubiGeburtsort = document.getElementById('azubi-geburtsort').value;
+          var azubiGeschlecht = document.getElementById('azubi-geschlecht').value;
+          var azubiStrasse = document.getElementById('azubi-strasse').value;
+          var azubiPlz = document.getElementById('azubi-plz').value;
+          var azubiOrt = document.getElementById('azubi-ort').value;
+          var azubiStaat = document.getElementById('azubi-staatsangehoerigkeit').value;
+          var azubiTelefon = document.getElementById('azubi-telefon').value;
+          var azubiEmail = document.getElementById('azubi-email').value;
+          var azubiAbschluss = document.getElementById('azubi-schulabschluss').options[document.getElementById('azubi-schulabschluss').selectedIndex].text;
+          var azubiAJahr = document.getElementById('azubi-ausbildungsjahr').options[document.getElementById('azubi-ausbildungsjahr').selectedIndex].text;
+          var azubiABeginn = document.getElementById('azubi-ausbildungsbeginn').value;
+          var azubiAEnde = document.getElementById('azubi-ausbildungsende').value;
 
-          // Show success message
-          var alert = document.createElement('div');
-          alert.className = 'alert alert-success';
-          alert.innerHTML = '<strong>Anmeldung erfolgreich!</strong><br>Die Anmeldung von <strong>' +
-            azubiName.replace(/</g, '&lt;').replace(/>/g, '&gt;') +
+          var betriebName = document.getElementById('betrieb-name').value;
+          var betriebInhaber = document.getElementById('betrieb-inhaber').value;
+          var betriebAusbilder = document.getElementById('betrieb-ausbilder').value;
+          var betriebStrasse = document.getElementById('betrieb-strasse').value;
+          var betriebPlz = document.getElementById('betrieb-plz').value;
+          var betriebOrt = document.getElementById('betrieb-ort').value;
+          var betriebInnung = document.getElementById('betrieb-innung').options[document.getElementById('betrieb-innung').selectedIndex].text;
+          var betriebTelefon = document.getElementById('betrieb-telefon').value;
+          var betriebEmail = document.getElementById('betrieb-email').value;
+          var betriebHwk = document.getElementById('betrieb-hwk').options[document.getElementById('betrieb-hwk').selectedIndex].text;
+          var betriebHwkNr = document.getElementById('betrieb-hwk-nummer').value;
+          var bemerkungen = document.getElementById('bemerkungen').value;
+
+          // Build email body
+          var subject = 'Berufsschulanmeldung Dachdecker/in: ' + azubiVorname + ' ' + azubiNachname + ' (' + betriebName + ')';
+          var body = '=== ANMELDUNG ZUR BERUFSSCHULE - DACHDECKER/IN ===\n\n' +
+            '--- ANGABEN ZUM/ZUR AUSZUBILDENDEN ---\n' +
+            'Name: ' + azubiVorname + ' ' + azubiNachname + '\n' +
+            'Geburtsdatum: ' + azubiGeburtsdatum + '\n' +
+            'Geburtsort: ' + azubiGeburtsort + '\n' +
+            'Geschlecht: ' + azubiGeschlecht + '\n' +
+            'Adresse: ' + azubiStrasse + ', ' + azubiPlz + ' ' + azubiOrt + '\n' +
+            'Staatsangehoerigkeit: ' + azubiStaat + '\n' +
+            'Telefon: ' + azubiTelefon + '\n' +
+            'E-Mail: ' + azubiEmail + '\n' +
+            'Schulabschluss: ' + azubiAbschluss + '\n' +
+            'Ausbildungsjahr: ' + azubiAJahr + '\n' +
+            'Ausbildungsbeginn: ' + azubiABeginn + '\n' +
+            'Voraussichtliches Ende: ' + azubiAEnde + '\n\n' +
+            '--- ANGABEN ZUM AUSBILDUNGSBETRIEB ---\n' +
+            'Betrieb: ' + betriebName + '\n' +
+            'Inhaber/in: ' + betriebInhaber + '\n' +
+            'Ausbilder/in: ' + betriebAusbilder + '\n' +
+            'Adresse: ' + betriebStrasse + ', ' + betriebPlz + ' ' + betriebOrt + '\n' +
+            'Dachdecker-Innung: ' + betriebInnung + '\n' +
+            'Telefon: ' + betriebTelefon + '\n' +
+            'E-Mail: ' + betriebEmail + '\n' +
+            'Handwerkskammer: ' + betriebHwk + '\n' +
+            'HWK-Nummer: ' + betriebHwkNr + '\n\n' +
+            '--- BEMERKUNGEN ---\n' +
+            (bemerkungen || '(keine)') + '\n';
+
+          // Open mailto link to send to schulleitung@wks-weilburg.de
+          var mailtoLink = 'mailto:schulleitung@wks-weilburg.de' +
+            '?subject=' + encodeURIComponent(subject) +
+            '&body=' + encodeURIComponent(body);
+          window.location.href = mailtoLink;
+
+          // Show confirmation message
+          var alertEl = document.createElement('div');
+          alertEl.className = 'alert alert-success';
+          alertEl.innerHTML = '<strong>E-Mail wird vorbereitet!</strong><br>Ihr E-Mail-Programm öffnet sich mit der Anmeldung von <strong>' +
+            (azubiVorname + ' ' + azubiNachname).replace(/</g, '&lt;').replace(/>/g, '&gt;') +
             '</strong> (Betrieb: <strong>' +
             betriebName.replace(/</g, '&lt;').replace(/>/g, '&gt;') +
-            '</strong>) wurde entgegengenommen. Sie erhalten eine Bestätigung per E-Mail.';
-          form.parentNode.insertBefore(alert, form);
-          form.reset();
+            '</strong>). Bitte senden Sie die E-Mail an <strong>schulleitung@wks-weilburg.de</strong> ab.';
+          form.parentNode.insertBefore(alertEl, form);
 
-          // Scroll to success message
-          alert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          alertEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
           setTimeout(function() {
-            alert.remove();
-          }, 8000);
+            alertEl.remove();
+          }, 12000);
         });
       }
 
