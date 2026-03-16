@@ -1,0 +1,568 @@
+/* ============================================
+   Dachdecker Landingpage - Spezifische Styles
+   Wilhelm-Knapp-Schule Weilburg
+   ============================================ */
+
+/* Dachdecker color accent */
+:root {
+  --dach-orange: #c75b12;
+  --dach-orange-light: #e8722a;
+  --dach-orange-dark: #a04a0e;
+  --dach-brown: #5c3a1e;
+  --dach-warm-bg: #fdf6f0;
+}
+
+/* ========== Hero Section ========== */
+.dach-hero {
+  position: relative;
+  background: linear-gradient(135deg, var(--wks-dark) 0%, #1a4a6e 40%, var(--dach-orange-dark) 100%);
+  color: var(--wks-white);
+  padding: 90px 0 100px;
+  overflow: hidden;
+}
+
+.dach-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 80% 20%, rgba(199,91,18,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, rgba(0,51,102,0.2) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.dach-hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+.dach-hero-content {
+  max-width: 700px;
+}
+
+.dach-hero-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+.dach-hero h1 {
+  font-size: 2.8rem;
+  color: var(--wks-white);
+  margin-bottom: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.dach-hero p {
+  font-size: 1.15rem;
+  opacity: 0.9;
+  margin-bottom: 30px;
+  line-height: 1.7;
+}
+
+/* Stats override for Dachdecker page */
+.dach-stats {
+  margin-top: -55px;
+}
+
+.dach-stats .stat-card {
+  border-top: 3px solid var(--dach-orange);
+}
+
+/* ========== Info Cards Grid ========== */
+.dach-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-bottom: 50px;
+}
+
+.dach-info-card {
+  background: var(--wks-white);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  border: 1px solid var(--wks-gray-200);
+  transition: all var(--transition);
+}
+
+.dach-info-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--dach-orange);
+}
+
+.dach-info-icon {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius);
+  background: var(--dach-warm-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dach-info-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+}
+
+.dach-info-card p {
+  color: var(--wks-gray-600);
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.dach-info-card ul {
+  color: var(--wks-gray-600);
+  font-size: 0.95rem;
+  padding-left: 20px;
+  margin-top: 8px;
+}
+
+.dach-info-card li {
+  margin-bottom: 6px;
+}
+
+/* ========== Timeline ========== */
+.dach-timeline {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.dach-timeline > h3 {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 32px;
+}
+
+.timeline-container {
+  position: relative;
+  padding-left: 40px;
+}
+
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--wks-primary), var(--dach-orange));
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 32px;
+  padding-left: 30px;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -32px;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--dach-orange);
+  color: var(--wks-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(199,91,18,0.3);
+}
+
+.timeline-content {
+  background: var(--wks-white);
+  border-radius: var(--radius);
+  padding: 24px;
+  border: 1px solid var(--wks-gray-200);
+  box-shadow: var(--shadow-sm);
+}
+
+.timeline-content h4 {
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+  color: var(--wks-dark);
+}
+
+.timeline-content p {
+  color: var(--wks-gray-600);
+  font-size: 0.9rem;
+}
+
+/* ========== Dachdeckerzentrum ========== */
+.dach-zentrum-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.dach-zentrum-text h3 {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+}
+
+.dach-zentrum-text p {
+  color: var(--wks-gray-600);
+  margin-bottom: 14px;
+  line-height: 1.7;
+}
+
+.dach-features {
+  margin-top: 24px;
+}
+
+.dach-feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 0.95rem;
+  color: var(--wks-text);
+}
+
+.dach-feature-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #e6f4ea;
+  color: #28a745;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.dach-zentrum-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dach-zentrum-card {
+  background: var(--wks-white);
+  border-radius: var(--radius);
+  padding: 24px;
+  border-left: 4px solid var(--dach-orange);
+  box-shadow: var(--shadow-sm);
+}
+
+.dach-zentrum-card h4 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: var(--wks-dark);
+}
+
+.dach-zentrum-card p {
+  color: var(--wks-gray-600);
+  font-size: 0.9rem;
+}
+
+/* ========== Überbetriebliche Ausbildung Table ========== */
+.dach-ueber-content {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.dach-ueber-text p {
+  color: var(--wks-gray-600);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.dach-ueber-table {
+  margin-top: 20px;
+}
+
+.dach-ueber-table table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.dach-ueber-table thead {
+  background: var(--wks-dark);
+  color: var(--wks-white);
+}
+
+.dach-ueber-table th {
+  padding: 14px 20px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.dach-ueber-table td {
+  padding: 14px 20px;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--wks-gray-200);
+  color: var(--wks-text);
+}
+
+.dach-ueber-table tbody tr:hover {
+  background: var(--wks-gray-100);
+}
+
+.dach-ueber-table tfoot {
+  background: var(--wks-gray-100);
+}
+
+.dach-ueber-table tfoot td {
+  font-weight: 600;
+  border-bottom: none;
+}
+
+/* ========== Form Styles ========== */
+.dach-form-wrapper {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.dach-form-container {
+  max-width: 100%;
+  padding: 40px;
+}
+
+.dach-fieldset {
+  border: 1px solid var(--wks-gray-200);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  margin-bottom: 28px;
+  background: var(--wks-white);
+}
+
+.dach-fieldset legend {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--wks-dark);
+  padding: 0 12px;
+  background: var(--wks-white);
+}
+
+/* Upload Area */
+.dach-upload-hint {
+  color: var(--wks-gray-600);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.dach-upload-area {
+  position: relative;
+  border: 2px dashed var(--wks-gray-300);
+  border-radius: var(--radius);
+  padding: 30px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  background: var(--wks-gray-100);
+}
+
+.dach-upload-area:hover,
+.dach-upload-area.drag-over {
+  border-color: var(--dach-orange);
+  background: var(--dach-warm-bg);
+}
+
+.dach-upload-area.has-file {
+  border-color: var(--wks-success);
+  border-style: solid;
+  background: #f0faf0;
+}
+
+.dach-file-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.dach-upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--wks-gray-600);
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+.dach-upload-icon {
+  font-size: 2rem;
+  margin-bottom: 4px;
+}
+
+.dach-upload-formats {
+  font-size: 0.8rem;
+  color: var(--wks-gray-600);
+  opacity: 0.7;
+}
+
+.dach-file-name {
+  display: none;
+  margin-top: 10px;
+  padding: 8px 14px;
+  background: var(--wks-white);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  color: var(--wks-primary);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.dach-upload-area.has-file .dach-file-name {
+  display: block;
+}
+
+/* Submit Button */
+.dach-submit-btn {
+  width: 100%;
+  justify-content: center;
+  font-size: 1.1rem;
+  padding: 16px 36px;
+  margin-top: 10px;
+}
+
+.dach-form-note {
+  text-align: center;
+  color: var(--wks-gray-600);
+  font-size: 0.85rem;
+  margin-top: 16px;
+}
+
+/* ========== Kontakt Grid ========== */
+.dach-kontakt-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.dach-kontakt-card {
+  background: var(--wks-white);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center;
+  border: 1px solid var(--wks-gray-200);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+}
+
+.dach-kontakt-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.dach-kontakt-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.dach-kontakt-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+.dach-kontakt-card p {
+  color: var(--wks-gray-600);
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 992px) {
+  .dach-hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .dach-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dach-zentrum-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dach-kontakt-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dach-hero {
+    padding: 60px 0 70px;
+  }
+
+  .dach-hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .dach-hero p {
+    font-size: 1rem;
+  }
+
+  .dach-stats {
+    margin-top: -35px;
+  }
+
+  .dach-fieldset {
+    padding: 20px;
+  }
+
+  .dach-form-container {
+    padding: 24px;
+  }
+
+  .dach-ueber-table {
+    overflow-x: auto;
+  }
+
+  .dach-ueber-table table {
+    min-width: 500px;
+  }
+
+  .timeline-container {
+    padding-left: 30px;
+  }
+
+  .timeline-item {
+    padding-left: 20px;
+  }
+
+  .timeline-marker {
+    left: -25px;
+    width: 34px;
+    height: 34px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dach-hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .dach-upload-area {
+    padding: 20px 16px;
+  }
+}
