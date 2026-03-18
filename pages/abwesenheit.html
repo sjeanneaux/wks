@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Abwesenheitsmeldung der Wilhelm-Knapp-Schule Weilburg - Melden Sie Ihre Abwesenheit schnell und unkompliziert.">
+  <title>Abwesenheitsmeldung | Wilhelm-Knapp-Schule Weilburg</title>
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* Abwesenheitsformular spezifische Styles */
+    .absence-type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .absence-type-option {
+      position: relative;
+    }
+
+    .absence-type-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .absence-type-option label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 12px;
+      border: 2px solid var(--wks-gray-200);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all var(--transition);
+      text-align: center;
+      font-weight: 500;
+      font-size: 0.9rem;
+      background: var(--wks-white);
+    }
+
+    .absence-type-option label:hover {
+      border-color: var(--wks-primary);
+      background: var(--wks-light);
+    }
+
+    .absence-type-option input[type="radio"]:checked + label {
+      border-color: var(--wks-primary);
+      background: var(--wks-light);
+      color: var(--wks-primary);
+      font-weight: 600;
+    }
+
+    .absence-type-icon {
+      font-size: 1.5rem;
+    }
+
+    .time-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .info-box {
+      background: var(--wks-light);
+      border-left: 4px solid var(--wks-primary);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+      color: var(--wks-text);
+      line-height: 1.6;
+    }
+
+    .info-box strong {
+      color: var(--wks-dark);
+    }
+
+    .dsgvo-box {
+      background: var(--wks-gray-100);
+      border: 1px solid var(--wks-gray-200);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .dsgvo-box h4 {
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+      color: var(--wks-dark);
+    }
+
+    .dsgvo-box p, .dsgvo-box ul {
+      font-size: 0.85rem;
+      color: var(--wks-gray-600);
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .dsgvo-box ul {
+      padding-left: 20px;
+    }
+
+    .dsgvo-box li {
+      margin-bottom: 4px;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .form-actions .btn {
+      flex: 1;
+      justify-content: center;
+    }
+
+    .btn-reset {
+      background: var(--wks-gray-100);
+      color: var(--wks-text);
+      border-color: var(--wks-gray-300);
+    }
+
+    .btn-reset:hover {
+      background: var(--wks-gray-200);
+      border-color: var(--wks-gray-300);
+      color: var(--wks-text);
+    }
+
+    .success-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .success-overlay.visible {
+      display: flex;
+    }
+
+    .success-card {
+      background: var(--wks-white);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .success-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #d4edda;
+      color: var(--wks-success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 20px;
+    }
+
+    .success-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+
+    .success-card p {
+      color: var(--wks-gray-600);
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .success-card .ref-number {
+      font-family: monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--wks-primary);
+      background: var(--wks-light);
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      display: inline-block;
+      margin: 12px 0 20px;
+    }
+
+    .field-error {
+      border-color: var(--wks-danger) !important;
+    }
+
+    .error-message {
+      color: var(--wks-danger);
+      font-size: 0.8rem;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .error-message.visible {
+      display: block;
+    }
+
+    .absence-summary {
+      display: none;
+      background: var(--wks-light);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .absence-summary.visible {
+      display: block;
+    }
+
+    .absence-summary h4 {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+
+    .absence-summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+
+    .absence-summary-grid dt {
+      font-weight: 600;
+      color: var(--wks-dark);
+    }
+
+    .absence-summary-grid dd {
+      color: var(--wks-gray-600);
+    }
+
+    @media (max-width: 768px) {
+      .absence-type-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .time-row {
+        grid-template-columns: 1fr;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .absence-summary-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .absence-type-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      .header, .footer, .back-to-top, .page-header .breadcrumb,
+      .form-actions, .top-bar, .info-box, .dsgvo-box {
+        display: none !important;
+      }
+
+      .page-header {
+        background: none !important;
+        color: var(--wks-dark) !important;
+        padding: 20px 0 !important;
+      }
+
+      .page-header h1 {
+        color: var(--wks-dark) !important;
+        font-size: 1.5rem !important;
+      }
+
+      .page-header p {
+        color: var(--wks-gray-600) !important;
+      }
+
+      .form-container {
+        box-shadow: none !important;
+        padding: 0 !important;
+      }
+
+      .section {
+        padding: 20px 0 !important;
+      }
+
+      body {
+        font-size: 12pt;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="../img/logo.svg" alt="Wilhelm-Knapp-Schule Weilburg Logo">
+      </a>
+      <button class="nav-toggle" aria-label="Navigation umschalten">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="../index.html#aktuelles">Aktuelles</a></li>
+          <li><a href="schulformen.html">Schulformen</a></li>
+          <li><a href="../index.html#ausbildungsberufe">Ausbildungsberufe</a></li>
+          <li><a href="bewerbung.html">Bewerbung</a></li>
+          <li><a href="abwesenheit.html" class="active">Abwesenheit</a></li>
+          <li><a href="../index.html#ueber-uns">Über uns</a></li>
+          <li><a href="../index.html#kontakt">Kontakt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <h1>Abwesenheitsmeldung</h1>
+      <p>Melden Sie Ihre Abwesenheit schnell und unkompliziert</p>
+      <div class="breadcrumb">
+        <a href="../index.html">Startseite</a>
+        <span>/</span>
+        <span>Abwesenheitsmeldung</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Abwesenheitsformular -->
+  <section class="section">
+    <div class="container">
+
+      <div class="info-box" style="max-width:700px; margin: 0 auto 30px;">
+        <strong>Hinweis:</strong> Bitte melden Sie Ihre Abwesenheit so früh wie möglich, idealerweise vor Unterrichtsbeginn. Alle mit <span class="required">*</span> gekennzeichneten Felder sind Pflichtfelder. Bei Abwesenheit von mehr als 3 Tagen ist ein ärztliches Attest erforderlich.
+      </div>
+
+      <div class="form-container">
+        <h3 style="margin-bottom:6px; font-size:1.3rem;">Abwesenheit melden</h3>
+        <p style="color: var(--wks-gray-600); margin-bottom:28px; font-size:0.95rem;">Wilhelm-Knapp-Schule Weilburg</p>
+
+        <form id="abwesenheitForm" novalidate>
+
+          <!-- Art der Abwesenheit -->
+          <fieldset style="border:none; margin-bottom:28px; padding:0;">
+            <legend style="font-size:1.1rem; font-weight:700; color:var(--wks-dark); margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--wks-gray-200); width:100%;">Art der Abwesenheit <span class="required">*</span></legend>
+
+            <div class="absence-type-grid">
+              <div class="absence-type-option">
+                <input type="radio" id="type-krank" name="abwesenheitsart" value="Krankheit" required>
+                <label for="type-krank">
+                  <span class="absence-type-icon">&#129298;</span>
+                  Krankheit
+                </label>
+              </div>
+              <div class="absence-type-option">
+                <input type="radio" id="type-arzt" name="abwesenheitsart" value="Arzttermin">
+                <label for="type-arzt">
+                  <span class="absence-type-icon">&#9877;</span>
+                  Arzttermin
+                </label>
+              </div>
+              <div class="absence-type-option">
+                <input type="radio" id="type-familie" name="abwesenheitsart" value="Familiäre Gründe">
+                <label for="type-familie">
+                  <span class="absence-type-icon">&#128106;</span>
+                  Familiäre Gründe
+                </label>
+              </div>
+              <div class="absence-type-option">
+                <input type="radio" id="type-behoerde" name="abwesenheitsart" value="Behördentermin">
+                <label for="type-behoerde">
+                  <span class="absence-type-icon">&#127963;</span>
+                  Behördentermin
+                </label>
+              </div>
+              <div class="absence-type-option">
+                <input type="radio" id="type-betrieb" name="abwesenheitsart" value="Betrieblicher Grund">
+                <label for="type-betrieb">
+                  <span class="absence-type-icon">&#9881;</span>
+                  Betrieblicher Grund
+                </label>
+              </div>
+              <div class="absence-type-option">
+                <input type="radio" id="type-sonstiges" name="abwesenheitsart" value="Sonstiges">
+                <label for="type-sonstiges">
+                  <span class="absence-type-icon">&#128221;</span>
+                  Sonstiges
+                </label>
+              </div>
+            </div>
+            <div class="error-message" id="error-type">Bitte wählen Sie die Art der Abwesenheit.</div>
+          </fieldset>
+
+          <!-- Zeitraum -->
+          <fieldset style="border:none; margin-bottom:28px; padding:0;">
+            <legend style="font-size:1.1rem; font-weight:700; color:var(--wks-dark); margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--wks-gray-200); width:100%;">Zeitraum der Abwesenheit</legend>
+
+            <div class="time-row">
+              <div class="form-group">
+                <label for="datum-von">Von (Datum) <span class="required">*</span></label>
+                <input type="date" id="datum-von" class="form-control" required>
+                <div class="error-message" id="error-datum-von">Bitte geben Sie das Startdatum an.</div>
+              </div>
+              <div class="form-group">
+                <label for="datum-bis">Bis (Datum) <span class="required">*</span></label>
+                <input type="date" id="datum-bis" class="form-control" required>
+                <div class="error-message" id="error-datum-bis">Das Enddatum darf nicht vor dem Startdatum liegen.</div>
+              </div>
+            </div>
+
+            <div class="time-row" style="margin-top:16px;">
+              <div class="form-group">
+                <label for="zeit-von">Von (Uhrzeit)</label>
+                <input type="time" id="zeit-von" class="form-control" placeholder="z.B. 08:00">
+              </div>
+              <div class="form-group">
+                <label for="zeit-bis">Bis (Uhrzeit)</label>
+                <input type="time" id="zeit-bis" class="form-control" placeholder="z.B. 13:00">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top:16px;">
+              <div class="checkbox-group">
+                <input type="checkbox" id="ganztags">
+                <label for="ganztags">Ganztägige Abwesenheit (Uhrzeiten nicht erforderlich)</label>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Persönliche Daten des Schülers -->
+          <fieldset style="border:none; margin-bottom:28px; padding:0;">
+            <legend style="font-size:1.1rem; font-weight:700; color:var(--wks-dark); margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--wks-gray-200); width:100%;">Angaben zur Person</legend>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="vorname">Vorname <span class="required">*</span></label>
+                <input type="text" id="vorname" class="form-control" required autocomplete="given-name">
+                <div class="error-message" id="error-vorname">Bitte geben Sie den Vornamen ein.</div>
+              </div>
+              <div class="form-group">
+                <label for="nachname">Nachname <span class="required">*</span></label>
+                <input type="text" id="nachname" class="form-control" required autocomplete="family-name">
+                <div class="error-message" id="error-nachname">Bitte geben Sie den Nachnamen ein.</div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="klasse">Klasse / Kurs <span class="required">*</span></label>
+                <select id="klasse" class="form-control" required>
+                  <option value="">Bitte wählen...</option>
+                  <optgroup label="Berufliches Gymnasium">
+                    <option value="BG 11a">BG 11a</option>
+                    <option value="BG 11b">BG 11b</option>
+                    <option value="BG 11c">BG 11c</option>
+                    <option value="BG 12a">BG 12a</option>
+                    <option value="BG 12b">BG 12b</option>
+                    <option value="BG 12c">BG 12c</option>
+                    <option value="BG 13a">BG 13a</option>
+                    <option value="BG 13b">BG 13b</option>
+                    <option value="BG 13c">BG 13c</option>
+                  </optgroup>
+                  <optgroup label="Fachoberschule">
+                    <option value="FOS 11a">FOS 11a</option>
+                    <option value="FOS 11b">FOS 11b</option>
+                    <option value="FOS 12a">FOS 12a</option>
+                    <option value="FOS 12b">FOS 12b</option>
+                  </optgroup>
+                  <optgroup label="Berufsfachschule">
+                    <option value="BFS 10a">BFS 10a</option>
+                    <option value="BFS 10b">BFS 10b</option>
+                    <option value="BFS 10c">BFS 10c</option>
+                    <option value="BFS 11a">BFS 11a</option>
+                    <option value="BFS 11b">BFS 11b</option>
+                  </optgroup>
+                  <optgroup label="Berufsschule">
+                    <option value="BS Metall 1">BS Metall 1. Lj.</option>
+                    <option value="BS Metall 2">BS Metall 2. Lj.</option>
+                    <option value="BS Metall 3">BS Metall 3. Lj.</option>
+                    <option value="BS Elektro 1">BS Elektro 1. Lj.</option>
+                    <option value="BS Elektro 2">BS Elektro 2. Lj.</option>
+                    <option value="BS Elektro 3">BS Elektro 3. Lj.</option>
+                    <option value="BS Holz 1">BS Holz 1. Lj.</option>
+                    <option value="BS Holz 2">BS Holz 2. Lj.</option>
+                    <option value="BS Holz 3">BS Holz 3. Lj.</option>
+                    <option value="BS KFZ 1">BS KFZ 1. Lj.</option>
+                    <option value="BS KFZ 2">BS KFZ 2. Lj.</option>
+                    <option value="BS KFZ 3">BS KFZ 3. Lj.</option>
+                    <option value="BS Wirtschaft 1">BS Wirtschaft 1. Lj.</option>
+                    <option value="BS Wirtschaft 2">BS Wirtschaft 2. Lj.</option>
+                    <option value="BS Wirtschaft 3">BS Wirtschaft 3. Lj.</option>
+                    <option value="BS Ernährung 1">BS Ernährung 1. Lj.</option>
+                    <option value="BS Ernährung 2">BS Ernährung 2. Lj.</option>
+                    <option value="BS Ernährung 3">BS Ernährung 3. Lj.</option>
+                  </optgroup>
+                  <optgroup label="Fachschule für Technik">
+                    <option value="FS Maschine VZ 1">FS Maschinentechnik VZ 1. Sem.</option>
+                    <option value="FS Maschine VZ 2">FS Maschinentechnik VZ 2. Sem.</option>
+                    <option value="FS Maschine TZ">FS Maschinentechnik TZ</option>
+                    <option value="FS Elektro VZ 1">FS Elektrotechnik VZ 1. Sem.</option>
+                    <option value="FS Elektro VZ 2">FS Elektrotechnik VZ 2. Sem.</option>
+                    <option value="FS Elektro TZ">FS Elektrotechnik TZ</option>
+                  </optgroup>
+                  <optgroup label="Berufsvorbereitung">
+                    <option value="BzB a">BzB a</option>
+                    <option value="BzB b">BzB b</option>
+                  </optgroup>
+                </select>
+                <div class="error-message" id="error-klasse">Bitte wählen Sie Ihre Klasse.</div>
+              </div>
+              <div class="form-group">
+                <label for="klassenlehrer">Klassenlehrer/in</label>
+                <input type="text" id="klassenlehrer" class="form-control" placeholder="Name der Klassenlehrerin / des Klassenlehrers">
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Kontaktdaten -->
+          <fieldset style="border:none; margin-bottom:28px; padding:0;">
+            <legend style="font-size:1.1rem; font-weight:700; color:var(--wks-dark); margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--wks-gray-200); width:100%;">Kontaktdaten</legend>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">E-Mail <span class="required">*</span></label>
+                <input type="email" id="email" class="form-control" required autocomplete="email" placeholder="ihre.email@beispiel.de">
+                <div class="error-message" id="error-email">Bitte geben Sie eine gültige E-Mail-Adresse ein.</div>
+              </div>
+              <div class="form-group">
+                <label for="telefon">Telefon</label>
+                <input type="tel" id="telefon" class="form-control" autocomplete="tel" placeholder="z.B. 0171 1234567">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="melder">Meldung erfolgt durch <span class="required">*</span></label>
+              <select id="melder" class="form-control" required>
+                <option value="">Bitte wählen...</option>
+                <option value="schueler">Schüler/in selbst (volljährig)</option>
+                <option value="eltern">Erziehungsberechtigte/r</option>
+                <option value="betrieb">Ausbildungsbetrieb</option>
+              </select>
+              <div class="error-message" id="error-melder">Bitte geben Sie an, wer die Meldung erstattet.</div>
+            </div>
+
+            <!-- Erziehungsberechtigte - nur bei minderjährigen -->
+            <div id="eltern-felder" style="display:none; margin-top:16px;">
+              <div class="info-box" style="margin-bottom:16px;">
+                Bei minderjährigen Schülerinnen und Schülern muss die Abwesenheitsmeldung durch eine/n Erziehungsberechtigte/n erfolgen.
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="eb-name">Name des/der Erziehungsberechtigten</label>
+                  <input type="text" id="eb-name" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="eb-telefon">Telefon Erziehungsberechtigte/r</label>
+                  <input type="tel" id="eb-telefon" class="form-control">
+                </div>
+              </div>
+            </div>
+
+            <!-- Betrieb - nur bei Berufsschülern -->
+            <div id="betrieb-felder" style="display:none; margin-top:16px;">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="betrieb-name">Name des Ausbildungsbetriebs</label>
+                  <input type="text" id="betrieb-name" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="betrieb-ansprechpartner">Ansprechpartner/in im Betrieb</label>
+                  <input type="text" id="betrieb-ansprechpartner" class="form-control">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Begründung -->
+          <fieldset style="border:none; margin-bottom:28px; padding:0;">
+            <legend style="font-size:1.1rem; font-weight:700; color:var(--wks-dark); margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--wks-gray-200); width:100%;">Begründung</legend>
+
+            <div class="form-group">
+              <label for="begruendung">Nähere Begründung / Bemerkungen</label>
+              <textarea id="begruendung" class="form-control" rows="4" placeholder="Optionale nähere Erläuterung zum Grund der Abwesenheit..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <div class="checkbox-group">
+                <input type="checkbox" id="attest">
+                <label for="attest">Ein ärztliches Attest wird / wurde eingereicht</label>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Zusammenfassung -->
+          <div class="absence-summary" id="zusammenfassung">
+            <h4>Zusammenfassung Ihrer Meldung</h4>
+            <dl class="absence-summary-grid">
+              <dt>Name:</dt>
+              <dd id="sum-name">-</dd>
+              <dt>Klasse:</dt>
+              <dd id="sum-klasse">-</dd>
+              <dt>Art:</dt>
+              <dd id="sum-art">-</dd>
+              <dt>Zeitraum:</dt>
+              <dd id="sum-zeitraum">-</dd>
+            </dl>
+          </div>
+
+          <!-- DSGVO Hinweis -->
+          <div class="dsgvo-box">
+            <h4>Datenschutzhinweis (DSGVO Art. 13)</h4>
+            <p>Die Wilhelm-Knapp-Schule Weilburg verarbeitet Ihre personenbezogenen Daten ausschließlich zum Zweck der Erfassung und Verwaltung von Abwesenheitsmeldungen gemäß der schulrechtlichen Bestimmungen des Landes Hessen.</p>
+            <p><strong>Verantwortlicher:</strong> Wilhelm-Knapp-Schule, Frankfurter Str. 40, 35781 Weilburg</p>
+            <p><strong>Rechtsgrundlage:</strong> Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. e DSGVO i.V.m. dem Hessischen Schulgesetz (HSchG) und der Verordnung zur Gestaltung des Schulverhältnisses.</p>
+            <p><strong>Speicherdauer:</strong> Die Daten werden für die Dauer des Schuljahres gespeichert und nach Ablauf der gesetzlichen Aufbewahrungsfristen gelöscht.</p>
+            <p><strong>Ihre Rechte:</strong></p>
+            <ul>
+              <li>Recht auf Auskunft über Ihre gespeicherten Daten (Art. 15 DSGVO)</li>
+              <li>Recht auf Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li>
+              <li>Recht auf Löschung, sofern keine Aufbewahrungspflicht besteht (Art. 17 DSGVO)</li>
+              <li>Recht auf Beschwerde bei der Hessischen Datenschutzbeauftragten</li>
+            </ul>
+            <p><strong>Datenschutzbeauftragter:</strong> Erreichbar unter <a href="mailto:datenschutz@wks-weilburg.de">datenschutz@wks-weilburg.de</a></p>
+          </div>
+
+          <!-- Einwilligungen -->
+          <div class="form-group">
+            <div class="checkbox-group">
+              <input type="checkbox" id="datenschutz" required>
+              <label for="datenschutz">Ich habe den Datenschutzhinweis gelesen und bin mit der Verarbeitung meiner Daten zum Zweck der Abwesenheitsmeldung einverstanden. <span class="required">*</span></label>
+            </div>
+            <div class="error-message" id="error-datenschutz">Sie müssen der Datenschutzerklärung zustimmen.</div>
+          </div>
+
+          <div class="form-group">
+            <div class="checkbox-group">
+              <input type="checkbox" id="richtigkeit" required>
+              <label for="richtigkeit">Ich bestätige, dass alle Angaben der Wahrheit entsprechen. <span class="required">*</span></label>
+            </div>
+            <div class="error-message" id="error-richtigkeit">Bitte bestätigen Sie die Richtigkeit Ihrer Angaben.</div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="form-actions">
+            <button type="button" class="btn btn-reset" id="btnReset">Formular zurücksetzen</button>
+            <button type="submit" class="btn btn-primary" style="font-size:1.05rem; padding:14px 28px;">Abwesenheit melden</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Zusätzliche Hinweise -->
+      <div style="max-width:700px; margin:30px auto 0; text-align:center;">
+        <p style="color:var(--wks-gray-600); font-size:0.9rem;">
+          <strong>Bitte beachten Sie:</strong> Diese Meldung ersetzt nicht die persönliche Entschuldigungspflicht. Ein schriftliches Entschuldigungsschreiben muss innerhalb von 3 Werktagen nach Rückkehr bei der Klassenlehrerin / dem Klassenlehrer eingereicht werden.
+        </p>
+        <p style="color:var(--wks-gray-600); font-size:0.85rem; margin-top:12px;">
+          Bei Fragen wenden Sie sich bitte an das Sekretariat: <a href="tel:+4964714890">06471 / 489-0</a> oder <a href="mailto:verwaltung@wks-weilburg.de">verwaltung@wks-weilburg.de</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Erfolgs-Overlay -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-card">
+      <div class="success-icon">&#10003;</div>
+      <h3>Abwesenheit erfolgreich gemeldet!</h3>
+      <p>Ihre Abwesenheitsmeldung wurde entgegengenommen.</p>
+      <p>Ihre Referenznummer:</p>
+      <div class="ref-number" id="refNumber">WKS-2026-000000</div>
+      <p style="font-size:0.85rem; color:var(--wks-gray-600);">Bitte notieren Sie sich diese Nummer für Rückfragen.</p>
+      <div style="display:flex; gap:12px; margin-top:20px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn btn-secondary" id="btnPrint" type="button">Drucken</button>
+        <button class="btn btn-primary" id="btnNewReport" type="button">Neue Meldung</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../img/logo.svg" alt="Wilhelm-Knapp-Schule" style="height:45px; filter:brightness(0) invert(1); opacity:0.9;">
+          <p>Selbstständige Berufliche Schule des Landkreises Limburg-Weilburg.</p>
+        </div>
+        <div>
+          <h4>Schulformen</h4>
+          <ul class="footer-links">
+            <li><a href="schulformen.html#berufliches-gymnasium">Berufliches Gymnasium</a></li>
+            <li><a href="schulformen.html#fachoberschule">Fachoberschule</a></li>
+            <li><a href="schulformen.html#berufsfachschule">Berufsfachschule</a></li>
+            <li><a href="schulformen.html#berufsschule">Berufsschule</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Schnellzugriff</h4>
+          <ul class="footer-links">
+            <li><a href="../index.html#aktuelles">Aktuelles</a></li>
+            <li><a href="bewerbung.html">Bewerbung</a></li>
+            <li><a href="../index.html#kontakt">Kontakt</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Kontakt</h4>
+          <ul class="footer-links">
+            <li>&#9742; 06471 / 489-0</li>
+            <li>&#9993; verwaltung@wks-weilburg.de</li>
+            <li>&#9719; Frankfurter Str. 40, 35781 Weilburg</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Wilhelm-Knapp-Schule Weilburg</span>
+        <div class="footer-legal">
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutzerklärung</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Nach oben">&#9650;</button>
+  <script src="../js/main.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('abwesenheitForm');
+    var successOverlay = document.getElementById('successOverlay');
+    var ganztags = document.getElementById('ganztags');
+    var zeitVon = document.getElementById('zeit-von');
+    var zeitBis = document.getElementById('zeit-bis');
+    var datumVon = document.getElementById('datum-von');
+    var datumBis = document.getElementById('datum-bis');
+    var melderSelect = document.getElementById('melder');
+    var elternFelder = document.getElementById('eltern-felder');
+    var betriebFelder = document.getElementById('betrieb-felder');
+    var zusammenfassung = document.getElementById('zusammenfassung');
+
+    // Heutiges Datum als Minimum setzen
+    var heute = new Date();
+    var heuteStr = heute.toISOString().split('T')[0];
+    datumVon.setAttribute('min', heuteStr);
+    datumBis.setAttribute('min', heuteStr);
+
+    // Heutiges Datum als Standard setzen
+    datumVon.value = heuteStr;
+    datumBis.value = heuteStr;
+
+    // Ganztags-Toggle
+    ganztags.addEventListener('change', function() {
+      if (this.checked) {
+        zeitVon.value = '';
+        zeitBis.value = '';
+        zeitVon.disabled = true;
+        zeitBis.disabled = true;
+      } else {
+        zeitVon.disabled = false;
+        zeitBis.disabled = false;
+      }
+    });
+
+    // Datum-von ändert Minimum von Datum-bis
+    datumVon.addEventListener('change', function() {
+      datumBis.setAttribute('min', this.value);
+      if (datumBis.value && datumBis.value < this.value) {
+        datumBis.value = this.value;
+      }
+      updateSummary();
+    });
+
+    datumBis.addEventListener('change', updateSummary);
+
+    // Melder-Auswahl: Zusatzfelder ein-/ausblenden
+    melderSelect.addEventListener('change', function() {
+      elternFelder.style.display = 'none';
+      betriebFelder.style.display = 'none';
+
+      if (this.value === 'eltern') {
+        elternFelder.style.display = 'block';
+      } else if (this.value === 'betrieb') {
+        betriebFelder.style.display = 'block';
+      }
+    });
+
+    // Live-Zusammenfassung aktualisieren
+    var nameInputs = ['vorname', 'nachname'];
+    nameInputs.forEach(function(id) {
+      document.getElementById(id).addEventListener('input', updateSummary);
+    });
+
+    document.getElementById('klasse').addEventListener('change', updateSummary);
+
+    document.querySelectorAll('input[name="abwesenheitsart"]').forEach(function(radio) {
+      radio.addEventListener('change', updateSummary);
+    });
+
+    function updateSummary() {
+      var vorname = document.getElementById('vorname').value.trim();
+      var nachname = document.getElementById('nachname').value.trim();
+      var klasse = document.getElementById('klasse').value;
+      var artRadio = document.querySelector('input[name="abwesenheitsart"]:checked');
+      var von = datumVon.value;
+      var bis = datumBis.value;
+
+      var hasSomeData = vorname || nachname || klasse || artRadio || von;
+
+      if (hasSomeData) {
+        zusammenfassung.classList.add('visible');
+      }
+
+      document.getElementById('sum-name').textContent = (vorname || nachname)
+        ? ((vorname + ' ' + nachname).trim() || '-')
+        : '-';
+
+      document.getElementById('sum-klasse').textContent = klasse || '-';
+      document.getElementById('sum-art').textContent = artRadio ? artRadio.value : '-';
+
+      if (von && bis) {
+        var vonFormatted = formatDate(von);
+        var bisFormatted = formatDate(bis);
+        document.getElementById('sum-zeitraum').textContent =
+          von === bis ? vonFormatted : vonFormatted + ' bis ' + bisFormatted;
+      } else {
+        document.getElementById('sum-zeitraum').textContent = '-';
+      }
+    }
+
+    function formatDate(dateStr) {
+      var parts = dateStr.split('-');
+      return parts[2] + '.' + parts[1] + '.' + parts[0];
+    }
+
+    // Fehler anzeigen / verstecken
+    function showError(fieldId, errorId) {
+      var field = document.getElementById(fieldId);
+      var error = document.getElementById(errorId);
+      if (field) field.classList.add('field-error');
+      if (error) error.classList.add('visible');
+    }
+
+    function clearError(fieldId, errorId) {
+      var field = document.getElementById(fieldId);
+      var error = document.getElementById(errorId);
+      if (field) field.classList.remove('field-error');
+      if (error) error.classList.remove('visible');
+    }
+
+    function clearAllErrors() {
+      document.querySelectorAll('.field-error').forEach(function(el) {
+        el.classList.remove('field-error');
+      });
+      document.querySelectorAll('.error-message').forEach(function(el) {
+        el.classList.remove('visible');
+      });
+    }
+
+    // Echtzeit-Validierung bei Eingabe
+    ['vorname', 'nachname', 'email', 'klasse', 'melder', 'datum-von', 'datum-bis'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', function() {
+          if (this.value.trim()) {
+            clearError(id, 'error-' + id);
+          }
+        });
+        el.addEventListener('change', function() {
+          if (this.value.trim()) {
+            clearError(id, 'error-' + id);
+          }
+        });
+      }
+    });
+
+    document.querySelectorAll('input[name="abwesenheitsart"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        clearError(null, 'error-type');
+      });
+    });
+
+    document.getElementById('datenschutz').addEventListener('change', function() {
+      if (this.checked) clearError(null, 'error-datenschutz');
+    });
+
+    document.getElementById('richtigkeit').addEventListener('change', function() {
+      if (this.checked) clearError(null, 'error-richtigkeit');
+    });
+
+    // Formular-Validierung
+    function validateForm() {
+      clearAllErrors();
+      var isValid = true;
+      var firstError = null;
+
+      // Art der Abwesenheit
+      var artChecked = document.querySelector('input[name="abwesenheitsart"]:checked');
+      if (!artChecked) {
+        showError(null, 'error-type');
+        isValid = false;
+        if (!firstError) firstError = document.querySelector('.absence-type-grid');
+      }
+
+      // Datum von
+      if (!datumVon.value) {
+        showError('datum-von', 'error-datum-von');
+        isValid = false;
+        if (!firstError) firstError = datumVon;
+      }
+
+      // Datum bis
+      if (datumBis.value && datumVon.value && datumBis.value < datumVon.value) {
+        showError('datum-bis', 'error-datum-bis');
+        isValid = false;
+        if (!firstError) firstError = datumBis;
+      }
+
+      // Vorname
+      if (!document.getElementById('vorname').value.trim()) {
+        showError('vorname', 'error-vorname');
+        isValid = false;
+        if (!firstError) firstError = document.getElementById('vorname');
+      }
+
+      // Nachname
+      if (!document.getElementById('nachname').value.trim()) {
+        showError('nachname', 'error-nachname');
+        isValid = false;
+        if (!firstError) firstError = document.getElementById('nachname');
+      }
+
+      // Klasse
+      if (!document.getElementById('klasse').value) {
+        showError('klasse', 'error-klasse');
+        isValid = false;
+        if (!firstError) firstError = document.getElementById('klasse');
+      }
+
+      // E-Mail
+      var emailField = document.getElementById('email');
+      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailField.value.trim() || !emailPattern.test(emailField.value.trim())) {
+        showError('email', 'error-email');
+        isValid = false;
+        if (!firstError) firstError = emailField;
+      }
+
+      // Melder
+      if (!melderSelect.value) {
+        showError('melder', 'error-melder');
+        isValid = false;
+        if (!firstError) firstError = melderSelect;
+      }
+
+      // Datenschutz
+      if (!document.getElementById('datenschutz').checked) {
+        showError(null, 'error-datenschutz');
+        isValid = false;
+        if (!firstError) firstError = document.getElementById('datenschutz');
+      }
+
+      // Richtigkeit
+      if (!document.getElementById('richtigkeit').checked) {
+        showError(null, 'error-richtigkeit');
+        isValid = false;
+        if (!firstError) firstError = document.getElementById('richtigkeit');
+      }
+
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      return isValid;
+    }
+
+    // Referenznummer generieren
+    function generateRefNumber() {
+      var now = new Date();
+      var year = now.getFullYear();
+      var random = Math.floor(Math.random() * 900000) + 100000;
+      return 'WKS-' + year + '-' + random;
+    }
+
+    // Formular absenden
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      if (!validateForm()) return;
+
+      // Daten sammeln (nur lokal anzeigen, nicht senden - DSGVO-konform)
+      var refNr = generateRefNumber();
+      document.getElementById('refNumber').textContent = refNr;
+
+      // Erfolgsmeldung anzeigen
+      successOverlay.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+    });
+
+    // Drucken-Button
+    document.getElementById('btnPrint').addEventListener('click', function() {
+      successOverlay.classList.remove('visible');
+      document.body.style.overflow = '';
+      window.print();
+    });
+
+    // Neue Meldung
+    document.getElementById('btnNewReport').addEventListener('click', function() {
+      successOverlay.classList.remove('visible');
+      document.body.style.overflow = '';
+      form.reset();
+      zusammenfassung.classList.remove('visible');
+      clearAllErrors();
+
+      // Felder zurücksetzen
+      datumVon.value = heuteStr;
+      datumBis.value = heuteStr;
+      zeitVon.disabled = false;
+      zeitBis.disabled = false;
+      elternFelder.style.display = 'none';
+      betriebFelder.style.display = 'none';
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Zurücksetzen-Button
+    document.getElementById('btnReset').addEventListener('click', function() {
+      if (confirm('Möchten Sie das Formular wirklich zurücksetzen? Alle eingegebenen Daten gehen verloren.')) {
+        form.reset();
+        zusammenfassung.classList.remove('visible');
+        clearAllErrors();
+
+        datumVon.value = heuteStr;
+        datumBis.value = heuteStr;
+        zeitVon.disabled = false;
+        zeitBis.disabled = false;
+        elternFelder.style.display = 'none';
+        betriebFelder.style.display = 'none';
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    // Overlay schließen mit Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && successOverlay.classList.contains('visible')) {
+        successOverlay.classList.remove('visible');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Overlay schließen beim Klick außerhalb
+    successOverlay.addEventListener('click', function(e) {
+      if (e.target === successOverlay) {
+        successOverlay.classList.remove('visible');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+  </script>
+</body>
+</html>
