@@ -1,0 +1,166 @@
+:root {
+  --bg: #0f172a;
+  --panel: #1e293b;
+  --panel-2: #273449;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
+  --green: #22c55e;
+  --orange: #f59e0b;
+  --red: #ef4444;
+  --border: #334155;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  width: 420px;
+  max-height: 600px;
+  overflow-y: auto;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.logo { font-weight: 700; font-size: 15px; }
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.panel { padding: 14px; }
+.hidden { display: none !important; }
+
+h2 { margin: 0 0 10px; font-size: 15px; }
+
+label { display: block; font-size: 12px; color: var(--muted); margin: 8px 0 4px; }
+
+input, select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.hint { font-size: 11px; color: var(--muted); line-height: 1.4; margin: 8px 0; }
+
+.row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+
+button.primary {
+  background: var(--accent);
+  color: #06283a;
+  border: none;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+button.primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.controls { display: flex; align-items: flex-end; gap: 8px; flex-wrap: wrap; }
+.controls select { flex: 1; min-width: 150px; }
+
+.status, .status-line { font-size: 12px; color: var(--muted); }
+.status-line { margin: 10px 0; min-height: 16px; }
+.status.ok { color: var(--green); }
+.status.err { color: var(--red); }
+
+/* Gesamturteil / Ampel */
+.verdict {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--panel);
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+}
+.verdict .score-circle {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 800;
+  flex-shrink: 0;
+  color: #06283a;
+}
+.verdict .vtext h3 { margin: 0 0 4px; font-size: 15px; }
+.verdict .vtext p { margin: 0; font-size: 12px; color: var(--muted); }
+
+.dot-green { background: var(--green); }
+.dot-orange { background: var(--orange); }
+.dot-red { background: var(--red); }
+
+details {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 12px;
+  padding: 4px 10px;
+}
+summary { cursor: pointer; font-weight: 600; padding: 8px 2px; }
+
+/* Technik-Checks */
+.check {
+  display: flex; gap: 8px; align-items: flex-start;
+  padding: 7px 0;
+  border-top: 1px solid var(--border);
+}
+.check:first-child { border-top: none; }
+.check .badge {
+  flex-shrink: 0; width: 18px; text-align: center; font-size: 14px;
+}
+.check .c-body { flex: 1; }
+.check .c-label { font-weight: 600; font-size: 13px; }
+.check .c-group { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.check .c-detail { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+/* KI-Bausteine */
+.baustein {
+  border-top: 1px solid var(--border);
+  padding: 10px 0;
+}
+.baustein:first-child { border-top: none; }
+.b-head { display: flex; align-items: center; gap: 8px; }
+.b-bar {
+  flex: 1; height: 8px; border-radius: 4px; background: var(--panel-2); overflow: hidden;
+}
+.b-bar > span { display: block; height: 100%; }
+.b-score { font-weight: 700; font-size: 13px; width: 34px; text-align: right; }
+.b-name { font-weight: 600; font-size: 13px; }
+.b-detail { font-size: 12px; line-height: 1.45; margin-top: 6px; }
+.b-detail .lbl { color: var(--accent); font-weight: 600; }
+.b-quote {
+  border-left: 3px solid var(--border);
+  padding: 2px 8px; margin: 4px 0; color: var(--muted); font-style: italic;
+}
+.b-example {
+  background: var(--panel-2); border-radius: 6px; padding: 6px 8px; margin-top: 4px;
+  white-space: pre-wrap;
+}
+.spinner {
+  display: inline-block; width: 14px; height: 14px;
+  border: 2px solid var(--border); border-top-color: var(--accent);
+  border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle;
+  margin-right: 6px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

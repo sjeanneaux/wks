@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website-Röntgenblick</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="logo">🔍 Website-Röntgenblick</div>
+      <button id="settingsToggle" class="icon-btn" title="Einstellungen">⚙️</button>
+    </header>
+
+    <!-- Einstellungen / API-Key -->
+    <section id="settings" class="panel hidden">
+      <h2>Einstellungen</h2>
+      <label for="apiKey">Anthropic API-Key</label>
+      <input id="apiKey" type="password" placeholder="sk-ant-..." autocomplete="off" />
+      <p class="hint">
+        Dein Schlüssel wird nur lokal im Browser gespeichert und ausschließlich an
+        api.anthropic.com gesendet. Jede Analyse kostet nur wenige Cent.
+      </p>
+      <div class="row">
+        <button id="saveKey" class="primary">Speichern</button>
+        <span id="keyStatus" class="status"></span>
+      </div>
+    </section>
+
+    <!-- Hauptbereich -->
+    <section id="main" class="panel">
+      <div class="controls">
+        <label for="siteType">Seitentyp</label>
+        <select id="siteType">
+          <option value="auto">Automatisch erkennen</option>
+          <option value="corporate">Unternehmensseite</option>
+          <option value="shop">Onlineshop</option>
+        </select>
+        <button id="analyze" class="primary">Seite analysieren</button>
+      </div>
+
+      <div id="status" class="status-line"></div>
+
+      <!-- Ergebnis -->
+      <div id="results" class="hidden">
+        <!-- Gesamturteil / Ampel -->
+        <div id="verdict" class="verdict"></div>
+
+        <!-- Technik-Schnellcheck -->
+        <details id="techWrap" open>
+          <summary>Technik-Schnellcheck</summary>
+          <div id="techChecks"></div>
+        </details>
+
+        <!-- KI-Bewertung -->
+        <details id="kiWrap" open>
+          <summary>Inhaltliche KI-Bewertung</summary>
+          <div id="kiResults"></div>
+        </details>
+      </div>
+    </section>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
