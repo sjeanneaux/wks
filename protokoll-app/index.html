@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protokoll-App · Wilhelm-Knapp-Schule Weilburg</title>
+<meta name="description" content="Sitzungsprotokolle der Wilhelm-Knapp-Schule Weilburg erfassen und als PDF im Schuldesign ausgeben.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cpath d='M10 8 L70 8 L70 50 Q70 72 40 78 Q10 72 10 50 Z' fill='%23003366'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --wks-dark:#003366; --wks-primary:#005599; --wks-light:#e8f0f8;
+    --wks-accent:#d4a017; --wks-white:#fff;
+    --gray-100:#f7f8fa; --gray-200:#e9ecef; --gray-300:#dee2e6;
+    --gray-600:#6c757d; --text:#2c3e50; --danger:#dc3545; --success:#28a745;
+    --radius:8px; --shadow:0 4px 12px rgba(0,0,0,.1);
+    --font:'Segoe UI',-apple-system,BlinkMacSystemFont,'Roboto','Helvetica Neue',Arial,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);color:var(--text);background:var(--gray-100);line-height:1.55}
+  button{font-family:inherit;cursor:pointer}
+  input,textarea,select{font-family:inherit;font-size:.95rem;color:var(--text)}
+
+  /* ---------- App chrome ---------- */
+  .appbar{background:var(--wks-dark);color:#fff;padding:10px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:sticky;top:0;z-index:20;box-shadow:var(--shadow)}
+  .appbar .brand{display:flex;align-items:center;gap:12px;font-weight:600}
+  .appbar .brand svg{height:38px;width:auto;background:#fff;border-radius:6px;padding:3px}
+  .appbar .brand small{display:block;font-weight:400;font-size:.72rem;opacity:.8}
+  .appbar .spacer{flex:1}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{border:none;border-radius:var(--radius);padding:9px 14px;font-size:.9rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:.15s}
+  .btn-primary{background:var(--wks-accent);color:#3a2c00}
+  .btn-primary:hover{background:#e5b52a}
+  .btn-ghost{background:rgba(255,255,255,.14);color:#fff}
+  .btn-ghost:hover{background:rgba(255,255,255,.26)}
+  .btn-sm{padding:5px 10px;font-size:.8rem}
+  .btn-danger{background:#fff;color:var(--danger);border:1px solid var(--gray-300)}
+  .btn-danger:hover{background:#fde8ea}
+  .btn-add{background:var(--wks-light);color:var(--wks-primary);border:1px dashed var(--wks-primary)}
+  .btn-add:hover{background:#dbe9f7}
+
+  .layout{max-width:1100px;margin:0 auto;padding:22px 18px 80px}
+  .card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+  .card>h2{background:var(--wks-light);color:var(--wks-dark);font-size:1rem;padding:11px 18px;border-bottom:3px solid var(--wks-accent);display:flex;align-items:center;gap:8px}
+  .card-body{padding:18px}
+
+  .grid{display:grid;gap:14px}
+  .grid-2{grid-template-columns:1fr 1fr}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:680px){.grid-2,.grid-3{grid-template-columns:1fr}}
+  .field{display:flex;flex-direction:column;gap:4px}
+  .field label{font-size:.78rem;font-weight:600;color:var(--gray-600);text-transform:uppercase;letter-spacing:.03em}
+  .field input,.field textarea,.field select{border:1px solid var(--gray-300);border-radius:6px;padding:9px 11px;background:#fff;transition:.15s}
+  .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--wks-primary);box-shadow:0 0 0 3px rgba(0,85,153,.12)}
+  .field textarea{resize:vertical;min-height:70px}
+  .hint{font-size:.75rem;color:var(--gray-600)}
+
+  /* ---------- TOP blocks ---------- */
+  .top-item{border:1px solid var(--gray-200);border-left:4px solid var(--wks-primary);border-radius:6px;padding:14px;margin-bottom:14px;background:var(--gray-100)}
+  .top-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .top-num{background:var(--wks-primary);color:#fff;font-weight:700;min-width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.85rem}
+  .top-head input.top-title{flex:1;font-weight:600;font-size:1rem;border:1px solid var(--gray-300);border-radius:6px;padding:8px 10px}
+  .sub{margin:10px 0 4px;font-size:.78rem;font-weight:700;color:var(--wks-dark);text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center;gap:6px}
+
+  .dec,.task{display:grid;gap:8px;background:#fff;border:1px solid var(--gray-200);border-radius:6px;padding:10px;margin-bottom:8px}
+  .dec-vote{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .dec-vote .vote{display:flex;align-items:center;gap:5px;font-size:.85rem}
+  .dec-vote .vote input{width:58px;text-align:center;padding:5px}
+  .task-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;align-items:center}
+  @media(max-width:680px){.task-row{grid-template-columns:1fr}}
+  .row-x{background:none;border:none;color:var(--danger);font-size:1.15rem;line-height:1;padding:4px 8px}
+
+  .mic{background:none;border:1px solid var(--gray-300);border-radius:6px;padding:5px 9px;font-size:.78rem;color:var(--wks-primary);display:inline-flex;align-items:center;gap:5px}
+  .mic.rec{background:#fde8ea;border-color:var(--danger);color:var(--danger);animation:pulse 1.2s infinite}
+  @keyframes pulse{50%{opacity:.55}}
+
+  .saved-list{display:flex;flex-direction:column;gap:8px}
+  .saved-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--gray-200);border-radius:6px;background:#fff}
+  .saved-row .meta{flex:1}
+  .saved-row .meta strong{color:var(--wks-dark)}
+  .saved-row .meta small{color:var(--gray-600);display:block;font-size:.78rem}
+  .empty{color:var(--gray-600);font-style:italic;padding:6px 0}
+
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--wks-dark);color:#fff;padding:12px 20px;border-radius:8px;box-shadow:var(--shadow);opacity:0;transition:.3s;z-index:50}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ================= PRINT / PDF DOCUMENT ================= */
+  .print-doc{display:none}
+  @media screen{ .print-only{display:none} }
+
+  @media print{
+    @page{size:A4;margin:18mm 16mm 22mm 16mm}
+    body{background:#fff}
+    .appbar,.layout,.toast{display:none !important}
+    .print-doc{display:block;color:#111;font-size:11pt}
+    .pd-header{display:flex;align-items:flex-start;justify-content:space-between;border-bottom:3px solid var(--wks-accent);padding-bottom:8px;margin-bottom:4px}
+    .pd-header svg{height:52px}
+    .pd-school{text-align:right;font-size:8.5pt;color:#333;line-height:1.35}
+    .pd-school strong{color:var(--wks-dark);font-size:9.5pt}
+    .pd-title{background:var(--wks-dark);color:#fff;padding:8px 12px;margin:10px 0 4px;border-radius:4px}
+    .pd-title h1{font-size:15pt;margin:0}
+    .pd-title .pd-sub{font-size:9pt;opacity:.9}
+    .pd-meta{width:100%;border-collapse:collapse;margin:8px 0}
+    .pd-meta td{border:1px solid #ccc;padding:4px 7px;font-size:9.5pt;vertical-align:top}
+    .pd-meta td.k{background:var(--wks-light);color:var(--wks-dark);font-weight:600;width:24%;white-space:nowrap}
+    .pd-people{font-size:9.5pt;margin:6px 0}
+    .pd-people b{color:var(--wks-dark)}
+    h2.pd-top{color:#fff;background:var(--wks-primary);padding:5px 10px;font-size:11pt;border-radius:3px;margin:14px 0 6px;page-break-after:avoid}
+    .pd-notes{white-space:pre-wrap;font-size:10pt;margin:2px 0 6px}
+    .pd-label{font-weight:700;color:var(--wks-dark);font-size:9pt;text-transform:uppercase;letter-spacing:.03em;margin-top:6px}
+    .pd-dec{border:1px solid #ccc;border-left:4px solid var(--wks-accent);padding:5px 9px;margin:4px 0;font-size:10pt;page-break-inside:avoid}
+    .pd-dec .vt{color:#333;font-size:9pt}
+    table.pd-tasks{width:100%;border-collapse:collapse;margin:4px 0;font-size:9.5pt}
+    table.pd-tasks th{background:var(--wks-light);color:var(--wks-dark);text-align:left;padding:4px 7px;border:1px solid #ccc}
+    table.pd-tasks td{padding:4px 7px;border:1px solid #ccc;vertical-align:top}
+    .pd-sign{display:flex;justify-content:space-between;gap:40px;margin-top:36px;page-break-inside:avoid}
+    .pd-sign div{flex:1;border-top:1px solid #333;padding-top:4px;font-size:9pt;text-align:center;color:#333}
+    .pd-foot{position:fixed;bottom:0;left:0;right:0;border-top:1px solid var(--wks-accent);padding-top:3px;font-size:7.5pt;color:#666;display:flex;justify-content:space-between}
+    .top-block{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= APP BAR ================= -->
+<header class="appbar">
+  <div class="brand">
+    <!-- WKS logo (shield + book + gear) -->
+    <svg viewBox="0 0 80 80" aria-label="Wilhelm-Knapp-Schule Weilburg">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#003366"/><stop offset="1" stop-color="#005599"/></linearGradient></defs>
+      <path d="M10 8 L50 8 Q50 2 56 2 L64 2 Q70 2 70 8 L70 50 Q70 72 40 78 Q10 72 10 50 Z" fill="url(#g)" stroke="#002244" stroke-width="1.5"/>
+      <path d="M25 20 L40 15 L55 20 L55 52 L40 47 L25 52 Z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+      <line x1="40" y1="15" x2="40" y2="47" stroke="#fff" stroke-width="2"/>
+      <circle cx="40" cy="60" r="6" fill="none" stroke="#f0c040" stroke-width="1.5"/>
+      <circle cx="40" cy="60" r="2.5" fill="#f0c040"/>
+    </svg>
+    <span>Protokoll-App<small>Wilhelm-Knapp-Schule Weilburg</small></span>
+  </div>
+  <div class="spacer"></div>
+  <div class="toolbar">
+    <button class="btn btn-ghost btn-sm" id="btnNew">＋ Neues Protokoll</button>
+    <button class="btn btn-ghost btn-sm" id="btnSave">💾 Speichern</button>
+    <button class="btn btn-ghost btn-sm" id="btnExport">⬇︎ JSON</button>
+    <button class="btn btn-ghost btn-sm" id="btnImportLbl" onclick="document.getElementById('fileImport').click()">⬆︎ JSON</button>
+    <input type="file" id="fileImport" accept="application/json" hidden>
+    <button class="btn btn-primary" id="btnPdf">🖨 PDF erzeugen</button>
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- Sitzungsdaten -->
+  <section class="card">
+    <h2>① Sitzungsdaten</h2>
+    <div class="card-body">
+      <div class="grid grid-2">
+        <div class="field"><label>Sitzungstitel / Gremium</label><input id="m_title" placeholder="z. B. Schulkonferenz, Gesamtkonferenz, Abteilungsleiterrunde"></div>
+        <div class="field"><label>Sitzungsart</label>
+          <select id="m_type">
+            <option>Gesamtkonferenz</option><option>Schulkonferenz</option><option>Abteilungskonferenz</option>
+            <option>Fachkonferenz</option><option>Schulleitungssitzung</option><option>Dienstbesprechung</option>
+            <option>Personalversammlung</option><option>Sonstige Sitzung</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid grid-3" style="margin-top:14px">
+        <div class="field"><label>Datum</label><input type="date" id="m_date"></div>
+        <div class="field"><label>Beginn</label><input type="time" id="m_start"></div>
+        <div class="field"><label>Ende</label><input type="time" id="m_end"></div>
+      </div>
+      <div class="grid grid-3" style="margin-top:14px">
+        <div class="field"><label>Ort / Raum</label><input id="m_location" placeholder="z. B. Raum A 204"></div>
+        <div class="field"><label>Sitzungsleitung</label><input id="m_chair" placeholder="Name"></div>
+        <div class="field"><label>Protokollführung</label><input id="m_recorder" placeholder="Name"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teilnehmer -->
+  <section class="card">
+    <h2>② Teilnehmende</h2>
+    <div class="card-body">
+      <div class="grid grid-3">
+        <div class="field"><label>Anwesend</label><textarea id="m_present" placeholder="Ein Name pro Zeile"></textarea></div>
+        <div class="field"><label>Entschuldigt / Abwesend</label><textarea id="m_absent" placeholder="Ein Name pro Zeile"></textarea></div>
+        <div class="field"><label>Gäste</label><textarea id="m_guests" placeholder="Ein Name pro Zeile"></textarea></div>
+      </div>
+      <p class="hint" style="margin-top:8px">Beschlussfähigkeit prüfen: <span id="countInfo">0 anwesend</span></p>
+    </div>
+  </section>
+
+  <!-- Tagesordnung -->
+  <section class="card">
+    <h2>③ Tagesordnungspunkte (TOP)</h2>
+    <div class="card-body">
+      <div id="tops"></div>
+      <button class="btn btn-add" id="btnAddTop">＋ Tagesordnungspunkt hinzufügen</button>
+    </div>
+  </section>
+
+  <!-- Nächste Sitzung + Sonstiges -->
+  <section class="card">
+    <h2>④ Abschluss</h2>
+    <div class="card-body">
+      <div class="grid grid-2">
+        <div class="field"><label>Nächste Sitzung – Datum/Uhrzeit</label><input id="m_next" placeholder="z. B. 15.09.2026, 15:00 Uhr"></div>
+        <div class="field"><label>Nächste Sitzung – Ort</label><input id="m_nextloc" placeholder="z. B. Raum A 204"></div>
+      </div>
+      <div class="field" style="margin-top:14px">
+        <label>Sonstiges / Verschiedenes
+          <button class="mic" data-target="m_misc" title="Deutsches Sprachdiktat">🎙 Diktat</button>
+        </label>
+        <textarea id="m_misc" placeholder="Weitere Anmerkungen…"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gespeicherte Protokolle -->
+  <section class="card">
+    <h2>📁 Gespeicherte Protokolle (lokal im Browser)</h2>
+    <div class="card-body">
+      <div class="saved-list" id="savedList"></div>
+      <p class="hint" style="margin-top:10px">Die Daten werden ausschließlich lokal auf diesem Gerät gespeichert (kein Server, keine Cloud). Für die dauerhafte Ablage bitte das PDF speichern oder per „JSON" exportieren.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= PRINT DOCUMENT ================= -->
+<div class="print-doc" id="printDoc"></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ============================================================
+   Protokoll-App · Wilhelm-Knapp-Schule Weilburg
+   Reines Frontend, offline, Speicherung in localStorage.
+   ============================================================ */
+
+const SCHOOL = {
+  name:"Wilhelm-Knapp-Schule Weilburg",
+  sub:"Selbstständige Berufliche Schule des Landkreises Limburg-Weilburg",
+  addr:"Frankfurter Str. 40 · 35781 Weilburg",
+  contact:"Tel. 06471 / 489-0 · verwaltung@wks-weilburg.de"
+};
+const LOGO_SVG = `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#003366"/><stop offset="1" stop-color="#005599"/></linearGradient></defs><path d="M10 8 L50 8 Q50 2 56 2 L64 2 Q70 2 70 8 L70 50 Q70 72 40 78 Q10 72 10 50 Z" fill="url(#pg)" stroke="#002244" stroke-width="1.5"/><path d="M25 20 L40 15 L55 20 L55 52 L40 47 L25 52 Z" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><line x1="40" y1="15" x2="40" y2="47" stroke="#fff" stroke-width="2"/><circle cx="40" cy="60" r="6" fill="none" stroke="#f0c040" stroke-width="1.5"/><circle cx="40" cy="60" r="2.5" fill="#f0c040"/></svg>`;
+const STORE_KEY = "wks_protokolle_v1";
+
+/* ---------- State ---------- */
+let currentId = null;
+let tops = []; // [{title, notes, decisions:[{text,ja,nein,enth}], tasks:[{what,who,due}]}]
+
+const $ = id => document.getElementById(id);
+const esc = s => (s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const uid = () => "p"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),2400);}
+
+/* ---------- TOP rendering ---------- */
+function renderTops(){
+  const wrap = $("tops");
+  wrap.innerHTML = "";
+  tops.forEach((top,i)=>{
+    const el = document.createElement("div");
+    el.className="top-item";
+    el.innerHTML = `
+      <div class="top-head">
+        <span class="top-num">TOP ${i+1}</span>
+        <input class="top-title" placeholder="Titel des Tagesordnungspunkts" value="${esc(top.title)}" data-k="title" data-i="${i}">
+        <button class="row-x" title="TOP entfernen" data-del-top="${i}">✕</button>
+      </div>
+      <div class="sub">Beratung / Notizen
+        <button class="mic" data-mic-top="${i}" title="Deutsches Sprachdiktat">🎙 Diktat</button>
+      </div>
+      <textarea class="field" style="width:100%;border:1px solid var(--gray-300);border-radius:6px;padding:9px" data-k="notes" data-i="${i}" placeholder="Diskussion, Sachstand, Wortbeiträge …">${esc(top.notes)}</textarea>
+
+      <div class="sub">Beschlüsse</div>
+      <div data-decs="${i}"></div>
+      <button class="btn btn-add btn-sm" data-add-dec="${i}">＋ Beschluss</button>
+
+      <div class="sub">Aufgaben / To-dos</div>
+      <div data-tasks="${i}"></div>
+      <button class="btn btn-add btn-sm" data-add-task="${i}">＋ Aufgabe</button>
+    `;
+    wrap.appendChild(el);
+    renderDecs(i, el.querySelector(`[data-decs="${i}"]`));
+    renderTasks(i, el.querySelector(`[data-tasks="${i}"]`));
+  });
+}
+
+function renderDecs(i, container){
+  container.innerHTML="";
+  tops[i].decisions.forEach((d,j)=>{
+    const row=document.createElement("div");row.className="dec";
+    row.innerHTML=`
+      <textarea placeholder="Beschlusstext …" data-dk="text" data-i="${i}" data-j="${j}" style="border:1px solid var(--gray-200);border-radius:6px;padding:8px;min-height:48px">${esc(d.text)}</textarea>
+      <div class="dec-vote">
+        <span class="vote">Ja <input type="number" min="0" value="${d.ja||0}" data-dk="ja" data-i="${i}" data-j="${j}"></span>
+        <span class="vote">Nein <input type="number" min="0" value="${d.nein||0}" data-dk="nein" data-i="${i}" data-j="${j}"></span>
+        <span class="vote">Enthaltung <input type="number" min="0" value="${d.enth||0}" data-dk="enth" data-i="${i}" data-j="${j}"></span>
+        <button class="row-x" data-del-dec="${i}:${j}" title="Beschluss entfernen">✕</button>
+      </div>`;
+    container.appendChild(row);
+  });
+}
+
+function renderTasks(i, container){
+  container.innerHTML="";
+  tops[i].tasks.forEach((t,j)=>{
+    const row=document.createElement("div");row.className="task";
+    row.innerHTML=`<div class="task-row">
+      <input placeholder="Aufgabe / Maßnahme" value="${esc(t.what)}" data-tk="what" data-i="${i}" data-j="${j}">
+      <input placeholder="Verantwortlich" value="${esc(t.who)}" data-tk="who" data-i="${i}" data-j="${j}">
+      <input type="date" value="${esc(t.due)}" data-tk="due" data-i="${i}" data-j="${j}">
+      <button class="row-x" data-del-task="${i}:${j}" title="Aufgabe entfernen">✕</button>
+    </div>`;
+    container.appendChild(row);
+  });
+}
+
+/* ---------- Event delegation for TOP area ---------- */
+$("tops").addEventListener("input", e=>{
+  const t=e.target, i=+t.dataset.i;
+  if(t.dataset.k){ tops[i][t.dataset.k]=t.value; }
+  else if(t.dataset.dk){ const j=+t.dataset.j; const v=t.dataset.dk==="text"?t.value:(+t.value||0); tops[i].decisions[j][t.dataset.dk]=v; }
+  else if(t.dataset.tk){ const j=+t.dataset.j; tops[i].tasks[j][t.dataset.tk]=t.value; }
+});
+$("tops").addEventListener("click", e=>{
+  const b=e.target.closest("button"); if(!b)return;
+  if(b.dataset.delTop!=null){ tops.splice(+b.dataset.delTop,1); renderTops(); }
+  else if(b.dataset.addDec!=null){ tops[+b.dataset.addDec].decisions.push({text:"",ja:0,nein:0,enth:0}); renderTops(); }
+  else if(b.dataset.addTask!=null){ tops[+b.dataset.addTask].tasks.push({what:"",who:"",due:""}); renderTops(); }
+  else if(b.dataset.delDec){ const [i,j]=b.dataset.delDec.split(":").map(Number); tops[i].decisions.splice(j,1); renderTops(); }
+  else if(b.dataset.delTask){ const [i,j]=b.dataset.delTask.split(":").map(Number); tops[i].tasks.splice(j,1); renderTops(); }
+  else if(b.dataset.micTop!=null){ startDictation(b, txt=>{ const i=+b.dataset.micTop; tops[i].notes=(tops[i].notes?tops[i].notes+" ":"")+txt; renderTops(); }); }
+});
+
+$("btnAddTop").onclick=()=>{ tops.push({title:"",notes:"",decisions:[],tasks:[]}); renderTops(); };
+
+/* ---------- Attendee counter ---------- */
+function lines(s){return (s||"").split("\n").map(x=>x.trim()).filter(Boolean);}
+$("m_present").addEventListener("input",()=>{ $("countInfo").textContent = lines($("m_present").value).length+" anwesend"; });
+
+/* ---------- Speech-to-text (Web Speech API, de-DE) ---------- */
+let recognition=null, recBtn=null;
+function startDictation(btn, onText){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ toast("Sprachdiktat wird von diesem Browser nicht unterstützt (Chrome/Edge empfohlen)."); return; }
+  if(recognition){ recognition.stop(); if(recBtn===btn){return;} }
+  recognition = new SR();
+  recognition.lang="de-DE"; recognition.interimResults=false; recognition.continuous=true;
+  recBtn=btn; btn.classList.add("rec"); btn.innerHTML="⏹ Aufnahme läuft";
+  recognition.onresult = ev=>{ let txt=""; for(let k=ev.resultIndex;k<ev.results.length;k++){ if(ev.results[k].isFinal) txt+=ev.results[k][0].transcript; } if(txt) onText(txt.trim()); };
+  recognition.onerror = ev=>{ toast("Diktat-Fehler: "+ev.error); stopDictation(); };
+  recognition.onend = ()=> stopDictation();
+  try{ recognition.start(); }catch(_){}
+}
+function stopDictation(){ if(recBtn){recBtn.classList.remove("rec"); recBtn.innerHTML="🎙 Diktat";} recBtn=null; recognition=null; }
+document.querySelectorAll(".mic[data-target]").forEach(btn=>{
+  btn.addEventListener("click",()=> startDictation(btn, txt=>{ const ta=$(btn.dataset.target); ta.value=(ta.value?ta.value+" ":"")+txt; }));
+});
+
+/* ---------- Collect / load model ---------- */
+function collect(){
+  return {
+    id: currentId || uid(),
+    meta:{
+      title:$("m_title").value, type:$("m_type").value, date:$("m_date").value,
+      start:$("m_start").value, end:$("m_end").value, location:$("m_location").value,
+      chair:$("m_chair").value, recorder:$("m_recorder").value,
+      present:$("m_present").value, absent:$("m_absent").value, guests:$("m_guests").value,
+      next:$("m_next").value, nextloc:$("m_nextloc").value, misc:$("m_misc").value
+    },
+    tops: JSON.parse(JSON.stringify(tops)),
+    savedAt: new Date().toISOString()
+  };
+}
+function apply(doc){
+  currentId=doc.id; const m=doc.meta||{};
+  $("m_title").value=m.title||""; $("m_type").value=m.type||"Gesamtkonferenz";
+  $("m_date").value=m.date||""; $("m_start").value=m.start||""; $("m_end").value=m.end||"";
+  $("m_location").value=m.location||""; $("m_chair").value=m.chair||""; $("m_recorder").value=m.recorder||"";
+  $("m_present").value=m.present||""; $("m_absent").value=m.absent||""; $("m_guests").value=m.guests||"";
+  $("m_next").value=m.next||""; $("m_nextloc").value=m.nextloc||""; $("m_misc").value=m.misc||"";
+  tops = (doc.tops||[]).map(t=>({title:t.title||"",notes:t.notes||"",decisions:t.decisions||[],tasks:t.tasks||[]}));
+  renderTops(); $("countInfo").textContent = lines(m.present).length+" anwesend";
+}
+function blank(){ currentId=uid(); apply({id:currentId,meta:{date:new Date().toISOString().slice(0,10)},tops:[{title:"",notes:"",decisions:[],tasks:[]}]}); }
+
+/* ---------- Persistence ---------- */
+function allSaved(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)||"[]"); }catch(_){ return []; } }
+function writeAll(arr){ localStorage.setItem(STORE_KEY, JSON.stringify(arr)); }
+function save(){
+  const doc=collect(); currentId=doc.id;
+  const arr=allSaved(); const idx=arr.findIndex(d=>d.id===doc.id);
+  if(idx>=0) arr[idx]=doc; else arr.unshift(doc);
+  writeAll(arr); renderSaved(); toast("Protokoll gespeichert.");
+}
+function renderSaved(){
+  const arr=allSaved(); const list=$("savedList");
+  if(!arr.length){ list.innerHTML='<p class="empty">Noch keine gespeicherten Protokolle.</p>'; return; }
+  list.innerHTML="";
+  arr.forEach(d=>{
+    const m=d.meta||{};
+    const row=document.createElement("div"); row.className="saved-row";
+    row.innerHTML=`<div class="meta"><strong>${esc(m.title||"(ohne Titel)")}</strong>
+      <small>${esc(m.type||"")} · ${esc(fmtDate(m.date))} · ${d.tops?.length||0} TOP · gespeichert ${esc(new Date(d.savedAt).toLocaleString("de-DE"))}</small></div>
+      <button class="btn btn-ghost btn-sm" style="background:var(--wks-light);color:var(--wks-primary)" data-load="${d.id}">Öffnen</button>
+      <button class="btn btn-danger btn-sm" data-del="${d.id}">Löschen</button>`;
+    list.appendChild(row);
+  });
+}
+$("savedList").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b)return;
+  if(b.dataset.load){ const d=allSaved().find(x=>x.id===b.dataset.load); if(d){apply(d); window.scrollTo({top:0,behavior:"smooth"}); toast("Protokoll geöffnet.");} }
+  else if(b.dataset.del){ if(confirm("Dieses Protokoll wirklich löschen?")){ writeAll(allSaved().filter(x=>x.id!==b.dataset.del)); renderSaved(); if(currentId===b.dataset.del) blank(); toast("Protokoll gelöscht."); } }
+});
+
+/* ---------- Import / Export ---------- */
+$("btnExport").onclick=()=>{
+  const doc=collect(); const blob=new Blob([JSON.stringify(doc,null,2)],{type:"application/json"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download="Protokoll_"+(doc.meta.date||"")+"_"+(doc.meta.title||"").replace(/[^a-z0-9äöü]+/gi,"_")+".json";
+  a.click(); URL.revokeObjectURL(a.href);
+};
+$("fileImport").onchange=e=>{
+  const f=e.target.files[0]; if(!f)return; const r=new FileReader();
+  r.onload=()=>{ try{ apply(JSON.parse(r.result)); toast("Protokoll importiert."); }catch(_){ toast("Datei konnte nicht gelesen werden."); } };
+  r.readAsText(f); e.target.value="";
+};
+
+/* ---------- Helpers ---------- */
+function fmtDate(iso){ if(!iso)return "—"; const [y,m,d]=iso.split("-"); return d&&m&&y?`${d}.${m}.${y}`:iso; }
+function nl2html(s){ return esc(s).replace(/\n/g,"<br>"); }
+
+/* ---------- Build print document ---------- */
+function buildPrintDoc(){
+  const doc=collect(); const m=doc.meta;
+  const present=lines(m.present), absent=lines(m.absent), guests=lines(m.guests);
+  const topsHtml = doc.tops.map((t,i)=>{
+    const decs = t.decisions.filter(d=>d.text.trim()).map(d=>{
+      const sum=(+d.ja||0)+(+d.nein||0)+(+d.enth||0);
+      const res=(sum>0)?` — <b>${(+d.ja>+d.nein)?"angenommen":(+d.nein>+d.ja?"abgelehnt":"Stimmengleichheit")}</b>`:"";
+      const vote=sum>0?`<div class="vt">Abstimmung: Ja ${+d.ja||0} · Nein ${+d.nein||0} · Enthaltungen ${+d.enth||0}${res}</div>`:"";
+      return `<div class="pd-dec">${nl2html(d.text)}${vote}</div>`;
+    }).join("");
+    const tasks = t.tasks.filter(x=>x.what.trim());
+    const tasksHtml = tasks.length?`<div class="pd-label">Aufgaben</div><table class="pd-tasks"><tr><th>Aufgabe</th><th>Verantwortlich</th><th>Frist</th></tr>${tasks.map(x=>`<tr><td>${esc(x.what)}</td><td>${esc(x.who)||"—"}</td><td>${fmtDate(x.due)}</td></tr>`).join("")}</table>`:"";
+    return `<div class="top-block"><h2 class="pd-top">TOP ${i+1} — ${esc(t.title)||"(ohne Titel)"}</h2>
+      ${t.notes.trim()?`<div class="pd-notes">${nl2html(t.notes)}</div>`:""}
+      ${decs?`<div class="pd-label">Beschlüsse</div>${decs}`:""}
+      ${tasksHtml}</div>`;
+  }).join("");
+
+  const peopleBlock = `
+    <div class="pd-people"><b>Anwesend (${present.length}):</b> ${present.length?esc(present.join(", ")):"—"}</div>
+    ${absent.length?`<div class="pd-people"><b>Entschuldigt/Abwesend:</b> ${esc(absent.join(", "))}</div>`:""}
+    ${guests.length?`<div class="pd-people"><b>Gäste:</b> ${esc(guests.join(", "))}</div>`:""}`;
+
+  $("printDoc").innerHTML=`
+    <div class="pd-header">
+      <div style="display:flex;align-items:center;gap:10px">${LOGO_SVG}
+        <div><strong style="color:var(--wks-dark);font-size:12pt">${SCHOOL.name}</strong><br><span style="font-size:8pt;color:#555">${SCHOOL.sub}</span></div>
+      </div>
+      <div class="pd-school"><strong>${SCHOOL.name}</strong><br>${SCHOOL.addr}<br>${SCHOOL.contact}</div>
+    </div>
+    <div class="pd-title"><h1>Protokoll — ${esc(m.type)}</h1><div class="pd-sub">${esc(m.title)||""}</div></div>
+    <table class="pd-meta">
+      <tr><td class="k">Datum</td><td>${fmtDate(m.date)}</td><td class="k">Zeit</td><td>${esc(m.start)||"—"}${m.end?" – "+esc(m.end):""} Uhr</td></tr>
+      <tr><td class="k">Ort / Raum</td><td>${esc(m.location)||"—"}</td><td class="k">Sitzungsleitung</td><td>${esc(m.chair)||"—"}</td></tr>
+      <tr><td class="k">Protokollführung</td><td>${esc(m.recorder)||"—"}</td><td class="k">Teilnehmerzahl</td><td>${present.length}</td></tr>
+    </table>
+    ${peopleBlock}
+    ${topsHtml||'<div class="pd-notes">Keine Tagesordnungspunkte erfasst.</div>'}
+    ${(m.misc.trim())?`<h2 class="pd-top">Sonstiges / Verschiedenes</h2><div class="pd-notes">${nl2html(m.misc)}</div>`:""}
+    ${(m.next||m.nextloc)?`<div class="pd-people" style="margin-top:12px"><b>Nächste Sitzung:</b> ${esc(m.next)||"—"}${m.nextloc?" · "+esc(m.nextloc):""}</div>`:""}
+    <div class="pd-sign">
+      <div>${esc(m.chair)||" "}<br><span style="color:#666">Sitzungsleitung</span></div>
+      <div>${esc(m.recorder)||" "}<br><span style="color:#666">Protokollführung</span></div>
+    </div>
+    <div class="pd-foot"><span>${SCHOOL.name} · ${SCHOOL.addr}</span><span>Protokoll vom ${fmtDate(m.date)}</span></div>`;
+}
+
+$("btnPdf").onclick=()=>{ buildPrintDoc(); setTimeout(()=>window.print(),80); };
+$("btnSave").onclick=save;
+$("btnNew").onclick=()=>{ if(confirm("Neues Protokoll beginnen? Nicht gespeicherte Änderungen gehen verloren.")){ blank(); toast("Neues Protokoll."); } };
+
+/* ---------- Init ---------- */
+blank();
+renderSaved();
+window.addEventListener("beforeprint", ()=>{ if($("printDoc").innerHTML.trim()==="") buildPrintDoc(); });
+</script>
+</body>
+</html>
