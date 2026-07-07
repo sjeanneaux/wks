@@ -1,0 +1,32 @@
+{
+  "name": "social-pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Video-to-social automation: Tella recording -> AI captions/blog -> Zernio multi-platform publishing -> comment/DM auto-reply.",
+  "type": "module",
+  "bin": {
+    "social-pipeline": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js",
+    "typecheck": "tsc --noEmit",
+    "publish-video": "tsx src/cli.ts publish",
+    "engage": "tsx src/cli.ts engage"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.40.0",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "@types/node": "^20.14.0"
+  }
+}
